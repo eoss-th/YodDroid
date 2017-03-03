@@ -68,6 +68,8 @@ public class SETFIN {
 
     public YahooHistory yahooHistory;
 
+    public List<SETHistorical> historicals;
+
     private SETFIN(String line) {
         
         values = new HashMap<>();

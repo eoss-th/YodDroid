@@ -22,11 +22,6 @@ import android.widget.SearchView;
 
 import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETIndex;
-import com.th.eoss.util.YahooHistory;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -267,7 +262,7 @@ public class MainActivity extends FragmentActivity
 
     public void displayChart(SETFIN set) {
         pager.setCurrentItem(3);
-        ChartFragment.chartFragment().load(set);
+        ChartFragment.chartFragment().loadYahoo(set);
     }
 
     /*

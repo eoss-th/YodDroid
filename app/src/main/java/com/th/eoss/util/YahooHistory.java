@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 
@@ -20,6 +23,7 @@ public class YahooHistory {
 
     public static class HiLo {
         public String date;
+        public Date datetime;
         public float open;
         public float high;
         public float low;
@@ -33,6 +37,11 @@ public class YahooHistory {
             this.low = low;
             this.close = close;
             this.volume = volume;
+            try {
+                datetime = dateFormat.parse(date);
+            } catch (Exception e) {
+
+            }
         }
 
         public String toString() {
@@ -42,6 +51,9 @@ public class YahooHistory {
 
     public HiLo [] hilos;
     public float [] closes;
+    public float [] ema5;
+    public float [] ema20;
+    public float [] ema80;
 
     public YahooHistory (String symbol) {
         this.symbol = symbol;
@@ -71,6 +83,10 @@ public class YahooHistory {
             for ( int i=0; i<closes.length; i++ ) {
                 closes[i] = hilos [i].close;
             }
+
+            ema5 = ema(closes, 5);
+            ema20 = ema(closes, 20);
+            ema80 = ema(closes, 80);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,5 +123,35 @@ public class YahooHistory {
             closes[newLength-1] = hilo.close;
         }
 
+    }
+
+    private float [] ema (float[]closes, int days) {
+        List<Float> emaList = new ArrayList<Float>();
+
+        if (closes.length >= days) {
+
+            float totalPrice = 0;
+
+            for (int i=0;i<days;i++) {
+                emaList.add(0f);
+                totalPrice += closes[i];
+            }
+
+            emaList.set(days-1, totalPrice / days);
+            float multiplier = 2f / (days + 1);
+
+            for (int i=days; i<closes.length; i++) {
+                emaList.add(emaList.get(i-1) + multiplier * (closes[i]-emaList.get(i-1)));
+            }
+        }
+
+        float [] emas = new float[emaList.size()];
+
+        int i=0;
+        for (Float f:emaList) {
+            emas[i++] = f;
+        }
+
+        return emas;
     }
 }

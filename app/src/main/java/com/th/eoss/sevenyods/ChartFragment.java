@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +27,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.AxisValueFormatter;
 import com.th.eoss.util.SETFIN;
-import com.th.eoss.util.SETQuote;
+import com.th.eoss.util.SETHistorical;
 import com.th.eoss.util.YahooHistory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wisarut on 5/10/2559.
@@ -42,8 +44,11 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
     private static ChartFragment chartFragment;
 
-    private static String [] DAY_RANGE_LABELS = {"W", "M", "6M", "Y", "2Y", "3Y", "6Y"};
-    private static int [] DAY_RANGES = {7, 30, 180, 365, 365*2, 365*3, 365*6};
+    private static DateFormat monthOnlyFormat = new SimpleDateFormat("MMM", Locale.US);
+    private static DateFormat yearOnlyFormat = new SimpleDateFormat("yyyy", Locale.US);
+
+    private static String [] DAY_RANGE_LABELS = {"H", "M", "6M", "Y", "3Y", "6Y"};
+    private static int [] DAY_RANGES = {0, 30, 180, 365, 365*3, 365*6};
 
     private CombinedChart combinedChart;
 
@@ -73,6 +78,10 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         combinedChart.getAxisLeft().setDrawGridLines(false);
         combinedChart.getAxisLeft().setDrawLabels(false);
+        combinedChart.getAxisRight().setDrawGridLines(false);
+        //combinedChart.getAxisRight().setDrawLabels(false);
+
+        combinedChart.getXAxis().setDrawGridLines(false);
 
         LinearLayout head = (LinearLayout) rootView.findViewById(R.id.headerLayout);
 
@@ -88,18 +97,35 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             head.addView(button);
         }
 
-        load(set);
+        loadHistoricals(set);
 
         return rootView;
     }
 
-    public void load(final SETFIN set) {
+    public void loadHistoricals(final SETFIN set) {
+
+        if (set==null) return;
+
+        this.set = set;
+
+        if (set.historicals==null) {
+            combinedChart.setNoDataText("Loading...");
+            new SETFINHistoricalAsyncTask(set).execute();
+            return;
+        }
+
+
+
+    }
+
+    public void loadYahoo(final SETFIN set) {
 
         if (set==null) return;
 
         this.set = set;
 
         if (set.yahooHistory==null) {
+            combinedChart.setNoDataText("Loading...");
             new SETFINYahooHistoryAsyncTask(set).execute();
             return;
         }
@@ -108,15 +134,39 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         LineDataSet closeDataSet = new LineDataSet(subList(createEntries(set.yahooHistory.closes),DAY_RANGES[daysRangeIndex]), "Closed");
         closeDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        closeDataSet.setDrawCircles(false);
+        closeDataSet.setDrawValues(false);
+
+        LineDataSet ema5DataSet = new LineDataSet(subList(createEntries(set.yahooHistory.ema5),DAY_RANGES[daysRangeIndex]), "EMA5");
+        ema5DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        ema5DataSet.setDrawCircles(false);
+        ema5DataSet.setDrawValues(false);
+        ema5DataSet.setColor(Color.CYAN);
+
+        LineDataSet ema20DataSet = new LineDataSet(subList(createEntries(set.yahooHistory.ema20),DAY_RANGES[daysRangeIndex]), "EMA20");
+        ema20DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        ema20DataSet.setDrawCircles(false);
+        ema20DataSet.setDrawValues(false);
+        ema20DataSet.setColor(Color.GREEN);
+
+        LineDataSet ema80DataSet = new LineDataSet(subList(createEntries(set.yahooHistory.ema80),DAY_RANGES[daysRangeIndex]), "EMA80");
+        ema80DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        ema80DataSet.setDrawCircles(false);
+        ema80DataSet.setDrawValues(false);
+        ema80DataSet.setColor(Color.YELLOW);
 
         LineData lineData = new LineData();
-        lineData.addDataSet(closeDataSet);
+        //lineData.addDataSet(closeDataSet);
+        lineData.addDataSet(ema5DataSet);
+        lineData.addDataSet(ema20DataSet);
+        lineData.addDataSet(ema80DataSet);
 
         CandleDataSet candleDataSet = new CandleDataSet(subList(createEntries(hiloes), DAY_RANGES[daysRangeIndex]), "Candle");
         candleDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         candleDataSet.setIncreasingColor(Color.GREEN);
         candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
         candleDataSet.setDecreasingColor(Color.RED);
+        candleDataSet.setDrawValues(false);
 
         CandleData candleData = new CandleData();
         candleData.addDataSet(candleDataSet);
@@ -129,6 +179,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         BarDataSet volumeDataSet = new BarDataSet(subList(createEntries(volumes), DAY_RANGES[daysRangeIndex]), "Volume");
         volumeDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         volumeDataSet.setColor(Color.LTGRAY);
+        volumeDataSet.setDrawValues(false);
 
         BarData barData = new BarData();
         barData.addDataSet(volumeDataSet);
@@ -141,13 +192,26 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedChart.setDescription(set.yahooHistory.symbol);
         combinedChart.setData(combinedData);
 
+        final DateFormat dateFormatter;
+        if (daysRangeIndex<=3) {
+            dateFormatter = monthOnlyFormat;
+        } else {
+            dateFormatter = yearOnlyFormat;
+        }
+
         combinedChart.getXAxis().setValueFormatter(new AxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+                String date="";
                 int index = (int) value;
-                if (index<hiloes.length)
-                    return hiloes[index].date;
-                return "";
+                if (index<hiloes.length) {
+                    try {
+                        date = dateFormatter.format(hiloes[index].datetime);
+                    } catch (Exception e) {
+
+                    }
+                }
+                return date;
             }
 
             @Override
@@ -196,7 +260,21 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         return entries;
     }
 
+    private List<Entry> createEntries(List<SETHistorical> historicals, String valueName) {
+        List<Entry> entries = new ArrayList<>();
+
+        int x = 0;
+        for (SETHistorical his:historicals) {
+            entries.add(new Entry(x, his.values.get(valueName)));
+            x ++;
+        }
+        return entries;
+    }
+
     private <T> List<T> subList(List<T> entries, int days) {
+
+        if (days > entries.size()) days = entries.size();
+
         int fromIndex = entries.size() - days;
         int toIndex = entries.size();
         return entries.subList(fromIndex, toIndex);
@@ -216,13 +294,17 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             index ++;
         }
 
-        load(set);
+        if (daysRangeIndex==0) {
+            loadHistoricals(set);
+        } else {
+            loadYahoo(set);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        load(set);
+        loadYahoo(set);
     }
 
     @Override

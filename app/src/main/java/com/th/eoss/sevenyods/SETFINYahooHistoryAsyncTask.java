@@ -25,6 +25,6 @@ public class SETFINYahooHistoryAsyncTask extends AsyncTask<Void, Void, YahooHist
     @Override
     protected void onPostExecute(YahooHistory yahooHistory) {
         set.yahooHistory = yahooHistory;
-        ChartFragment.chartFragment().load(set);
+        ChartFragment.chartFragment().loadYahoo(set);
     }
 }
