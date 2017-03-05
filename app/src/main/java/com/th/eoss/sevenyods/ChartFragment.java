@@ -114,7 +114,56 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
+        BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "Asset");
+        assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        assetDataSet.setColors(new int[]{Color.parseColor("#dee8eb"), Color.parseColor("#f2f2ef")});
+        assetDataSet.setStackLabels(new String[]{"Equity", "Liabilities"});
 
+        BarDataSet paidUpCapitalDataSet = new BarDataSet(createBarEntries(set.historicals, "paidUpCapital"), "Paidup Capital");
+        paidUpCapitalDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        paidUpCapitalDataSet.setColor(Color.parseColor("#7ea4b3"));
+        paidUpCapitalDataSet.setDrawValues(false);
+
+        BarData barData = new BarData();
+        barData.addDataSet(assetDataSet);
+        barData.addDataSet(paidUpCapitalDataSet);
+        barData.setBarWidth(0.8f);
+
+        CombinedData combinedData = new CombinedData();
+        combinedData.setData(barData);
+
+        combinedChart.setDescription(set.symbol);
+        combinedChart.setData(combinedData);
+
+        combinedChart.getXAxis().setValueFormatter(new AxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                String date="";
+                int index = (int) value;
+                if (index<set.historicals.size()) {
+                    date = set.historicals.get(index).asOfDate;
+                }
+                return date;
+            }
+
+            @Override
+            public int getDecimalDigits() {
+                return 0;
+            }
+        });
+
+        combinedChart.getAxisLeft().setAxisMinValue(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
+        combinedChart.getAxisLeft().setAxisMaxValue(combinedData.getYMax() * 1.2f);
+        combinedChart.getAxisLeft().setSpaceTop(10f);
+        //combinedChartView.leftAxis.enabled = false
+
+        combinedChart.getAxisRight().setAxisMinValue(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
+        combinedChart.getAxisRight().setAxisMaxValue(combinedData.getYMax() * 1.2f);
+        combinedChart.getAxisRight().setSpaceTop(10f);
+
+        combinedChart.getXAxis().setAxisMinValue(-1);
+        combinedChart.getXAxis().setAxisMaxValue(set.historicals.size());
+        combinedChart.invalidate();
 
     }
 
@@ -260,12 +309,23 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         return entries;
     }
 
-    private List<Entry> createEntries(List<SETHistorical> historicals, String valueName) {
-        List<Entry> entries = new ArrayList<>();
+    private List<BarEntry> createBarEntries(List<SETHistorical> historicals, String valueName) {
+        List<BarEntry> entries = new ArrayList<>();
 
         int x = 0;
         for (SETHistorical his:historicals) {
-            entries.add(new Entry(x, his.values.get(valueName)));
+            entries.add(new BarEntry(x, his.values.get(valueName)));
+            x ++;
+        }
+        return entries;
+    }
+
+    private List<BarEntry> createBarEntries(List<SETHistorical> historicals, String valueName1, String valueName2) {
+        List<BarEntry> entries = new ArrayList<>();
+
+        int x = 0;
+        for (SETHistorical his:historicals) {
+            entries.add(new BarEntry(x, new float[]{his.values.get(valueName1), his.values.get(valueName2)}));
             x ++;
         }
         return entries;
@@ -304,7 +364,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        loadYahoo(set);
+        //loadYahoo(set);
     }
 
     @Override

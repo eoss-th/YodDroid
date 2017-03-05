@@ -16,7 +16,7 @@ public class SETHistorical {
 
     public static final String historicalURL = "http://eoss-setfin.appspot.com/his?s=";
 
-    String asOfDate;
+    public String asOfDate;
 
     public Map<String, Float> values = new HashMap<>();
 

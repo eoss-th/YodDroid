@@ -262,7 +262,7 @@ public class MainActivity extends FragmentActivity
 
     public void displayChart(SETFIN set) {
         pager.setCurrentItem(3);
-        ChartFragment.chartFragment().loadYahoo(set);
+        //ChartFragment.chartFragment().loadYahoo(set);
     }
 
     /*
