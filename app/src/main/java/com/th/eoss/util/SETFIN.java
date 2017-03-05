@@ -36,18 +36,11 @@ public class SETFIN {
 
     static {
         LOW_IS_BETTER.addAll(Arrays.asList(new String[] {
-                "Market Cap", "EV", "EV/EBITDA",
-                "P/E", "P/BV",
-                "D/E", "S(D/E)",
-                "Cost",
+                "P/E", "Last",
         }));
         HIGH_IS_BETTER.addAll(Arrays.asList(new String[]  {
-                "EBITDA",
-                "ROA", "ROE", "Margin", "S(Margin)",
-                "EPS", "S(EPS)",
-                "CR", "S(CR)",
-                "DVD %", "S(DVD)",
-                "Volume", "Last", "Chg %"
+                "Net Growth %", "E/A Growth %",
+                "Predict MA", "Predict Chg %"
         }));
     }
 
