@@ -256,6 +256,7 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                     String symbol = symbols.get(position);
                     SETFIN set = SETFIN.cache.get(symbol);
                     ((MainActivity)getActivity()).displayChart(set);
+                    ChartFragment.chartFragment().loadHistoricals(set);
                 }
             }
         });
