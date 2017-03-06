@@ -143,7 +143,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             public String getFormattedValue(float value, AxisBase axis) {
                 String date="";
                 int index = (int) value;
-                if (index<set.historicals.size()) {
+                if (index>=0&&index<set.historicals.size()) {
                     date = set.historicals.get(index).asOfDate;
                 }
                 return date;
@@ -260,7 +260,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             public String getFormattedValue(float value, AxisBase axis) {
                 String date="";
                 int index = (int) value;
-                if (index<hiloes.length) {
+                if (index>=0&&index<hiloes.length) {
                     try {
                         date = dateFormatter.format(hiloes[index].datetime);
                     } catch (Exception e) {

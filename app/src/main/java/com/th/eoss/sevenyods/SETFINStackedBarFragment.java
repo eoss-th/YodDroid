@@ -149,59 +149,59 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                     String symbol = symbols.get(position);
                     final SETFIN set = SETFIN.cache.get(symbol);
 
-                    TextView textView = (TextView) row.findViewById(R.id.symbol);
-                    textView.setText(symbol);
+                    if (set!=null) {
+                        TextView textView = (TextView) row.findViewById(R.id.symbol);
+                        textView.setText(symbol);
 
-                    LinearLayout asset = (LinearLayout) row.findViewById(R.id.asset);
-                    asset.setBackgroundColor(Color.WHITE);
+                        LinearLayout asset = (LinearLayout) row.findViewById(R.id.asset);
+                        asset.setBackgroundColor(Color.WHITE);
 
-                    float eaGrowthPercent = set.getFloatValue("E/A Growth %");
+                        float eaGrowthPercent = set.getFloatValue("E/A Growth %");
 
-                    int gaColor;
-                    if (eaGrowthPercent > 0) {
-                        gaColor = Color.parseColor("#dee8eb");
-                    } else {
-                        gaColor = Color.parseColor("#7ea4b3");
+                        int gaColor;
+                        if (eaGrowthPercent > 0) {
+                            gaColor = Color.parseColor("#dee8eb");
+                        } else {
+                            gaColor = Color.parseColor("#7ea4b3");
+                        }
+
+                        LinearLayout equityGrowth = (LinearLayout) row.findViewById(R.id.equityGrowth);
+                        equityGrowth.setBackgroundColor(gaColor);
+                        float equityGrowthWidth = set.getFloatValue("G/A") * asset.getLayoutParams().width;
+                        equityGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) equityGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                        LinearLayout equity = (LinearLayout) row.findViewById(R.id.equity);
+                        equity.setBackgroundColor(Color.WHITE);
+                        float equityWidth = set.getFloatValue("E/G") * equityGrowthWidth;
+                        equity.setLayoutParams(new LinearLayout.LayoutParams((int) equityWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                        float netGrowthPercent = set.getFloatValue("Net Growth %");
+
+                        int ngColor;
+                        if (netGrowthPercent > 0) {
+                            ngColor = Color.parseColor("#b4ecb4");
+                        } else {
+                            ngColor = Color.parseColor("#ffb2ae");
+                        }
+
+                        LinearLayout netGrowth = (LinearLayout) row.findViewById(R.id.netGrowth);
+                        netGrowth.setBackgroundColor(ngColor);
+                        float netGrowthWidth = Math.abs(set.getFloatValue("NG/E") * equityWidth);
+                        netGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) netGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+                        float estimatedNet = set.getFloatValue("Estimated Net");
+                        int netColor;
+                        if (estimatedNet > 0) {
+                            netColor = Color.WHITE;
+                        } else {
+                            netColor = Color.parseColor("#ff6961");
+                        }
+
+                        LinearLayout net = (LinearLayout) row.findViewById(R.id.net);
+                        net.setBackgroundColor(netColor);
+                        float netWidth = Math.abs(set.getFloatValue("N/NG") * netGrowthWidth);
+                        net.setLayoutParams(new LinearLayout.LayoutParams((int) netWidth, LinearLayout.LayoutParams.MATCH_PARENT));
                     }
-
-                    LinearLayout equityGrowth = (LinearLayout) row.findViewById(R.id.equityGrowth);
-                    equityGrowth.setBackgroundColor(gaColor);
-                    float equityGrowthWidth = set.getFloatValue("G/A") * asset.getLayoutParams().width;
-                    equityGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) equityGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                    LinearLayout equity = (LinearLayout) row.findViewById(R.id.equity);
-                    equity.setBackgroundColor(Color.WHITE);
-                    float equityWidth = set.getFloatValue("E/G") * equityGrowthWidth;
-                    equity.setLayoutParams(new LinearLayout.LayoutParams((int) equityWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                    float netGrowthPercent = set.getFloatValue("Net Growth %");
-
-                    int ngColor;
-                    if (netGrowthPercent > 0) {
-                        ngColor = Color.parseColor("#b4ecb4");
-                    } else {
-                        ngColor = Color.parseColor("#ffb2ae");
-                    }
-
-                    LinearLayout netGrowth = (LinearLayout) row.findViewById(R.id.netGrowth);
-                    netGrowth.setBackgroundColor(ngColor);
-                    float netGrowthWidth = Math.abs(set.getFloatValue("NG/E") * equityWidth);
-                    netGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) netGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                    float estimatedNet = set.getFloatValue("Estimated Net");
-                    int netColor;
-                    if (estimatedNet > 0) {
-                        netColor = Color.WHITE;
-                    } else {
-                        netColor = Color.parseColor("#ff6961");
-                    }
-
-                    LinearLayout net = (LinearLayout) row.findViewById(R.id.net);
-                    net.setBackgroundColor(netColor);
-                    float netWidth = Math.abs(set.getFloatValue("N/NG") * netGrowthWidth);
-                    net.setLayoutParams(new LinearLayout.LayoutParams((int) netWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-
                 }
                 return convertView;
             }
@@ -230,18 +230,19 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                     String symbol = symbols.get(position);
                     final SETFIN set = map.get(symbol);
 
-                    TextView textView;
+                    if (set!=null) {
+                        TextView textView;
 
-                    for (int i=0; i<SETFIN.HEADERS[headerIndex].length; i++) {
-                        textView= (TextView) row.findViewById(i);
-                        if (i==0) {
-                            textView.setText(symbol);
-                        } else {
-                            textView.setText("" + set.getFloatValue(SETFIN.HEADERS[headerIndex][i]));
+                        for (int i=0; i<SETFIN.HEADERS[headerIndex].length; i++) {
+                            textView= (TextView) row.findViewById(i);
+                            if (i==0) {
+                                textView.setText(symbol);
+                            } else {
+                                textView.setText("" + set.getFloatValue(SETFIN.HEADERS[headerIndex][i]));
+                            }
                         }
+
                     }
-
-
                 }
                 return convertView;
             }
@@ -284,12 +285,14 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
         for (String symbol:list) {
             symbols.add(symbol);
             set = SETFIN.cache.get(symbol);
-            map.put(symbol, set);
 
-            for ( String head:SETFIN.MEAN_HEADERS) {
-                Mean.add(head, set.getFloatValue(head));
+            if (set!=null) {
+                map.put(symbol, set);
+
+                for ( String head:SETFIN.MEAN_HEADERS) {
+                    Mean.add(head, set.getFloatValue(head));
+                }
             }
-
         }
 
         reloadAll();

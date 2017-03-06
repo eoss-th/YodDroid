@@ -14,16 +14,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:id="@+id/headerLayout">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
-
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView"/>
+        android:id="@+id/searchView"
+        />
 
 </LinearLayout>

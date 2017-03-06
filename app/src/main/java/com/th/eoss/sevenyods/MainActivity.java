@@ -1,6 +1,8 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -60,22 +64,29 @@ public class MainActivity extends FragmentActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                String packageName = "com.th.eoss.setoperator";
+                Intent intent = MainActivity.this.getPackageManager().getLaunchIntentForPackage(packageName);
+                if (intent == null) {
+                    // Bring user to the market or let them choose an app?
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=" + packageName));
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MainActivity.this.startActivity(intent);
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         new SETIndexAsyncTask().execute(navigationView);
-        new SETFINAsyncTask().execute();
 
         SearchView searchView = (SearchView) navigationView.getHeaderView(0).findViewById(R.id.searchView);
 
@@ -86,19 +97,32 @@ public class MainActivity extends FragmentActivity
 
                 List<String> symbols = new ArrayList<String>();
 
+                Set<String> cacheSymbols = SETFIN.cache.keySet();
                 for (String searchSymbol:searchSymbols) {
-                    SETIndex.DICT.values().contains(searchSymbol);
-                    symbols.add(searchSymbol);
+
+                    for (String s:cacheSymbols) {
+                        if (s.startsWith(searchSymbol.toUpperCase())) {
+                            symbols.add(s);
+                        }
+                    }
                 }
 
                 if (!symbols.isEmpty()) {
                     SETFINStackedBarFragment.load(symbols);
                 }
+
+                drawer.closeDrawers();
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                if (newText.isEmpty()) {
+                    new SETFINAsyncTask().execute();
+                    drawer.closeDrawers();
+                }
 
                 return false;
             }
