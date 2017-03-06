@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 public class SETFIN {
 
+    public static final List<String> cache_symbols = new ArrayList<>();
     public static final Map<String, SETFIN> cache = new TreeMap<>();
 
     public static final String [][] HEADERS = {
@@ -201,6 +202,7 @@ public class SETFIN {
 
     public static List<SETFIN> load() {
 
+        cache_symbols.clear();
         cache.clear();
         List<SETFIN> result = new ArrayList<>();
 
@@ -216,6 +218,7 @@ public class SETFIN {
             }
 
             for (SETFIN set:result) {
+                cache_symbols.add(set.symbol);
                 cache.put(set.symbol, set);
             }
 

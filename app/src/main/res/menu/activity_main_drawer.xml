@@ -3,7 +3,8 @@
 
     <item android:title="Favourite">
         <menu>
-            <item android:title="My Favourite"/>
+            <item android:title="My Favourite" android:id="@+id/fav"/>
+            <item android:title="All Sectors" android:id="@+id/all"/>
         </menu>
     </item>
 

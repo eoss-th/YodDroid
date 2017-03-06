@@ -60,23 +60,6 @@ public class MainActivity extends FragmentActivity
         FragmentStatePagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(mPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String packageName = "com.th.eoss.setoperator";
-                Intent intent = MainActivity.this.getPackageManager().getLaunchIntentForPackage(packageName);
-                if (intent == null) {
-                    // Bring user to the market or let them choose an app?
-                    intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + packageName));
-                }
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                MainActivity.this.startActivity(intent);
-            }
-        });
-
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -185,8 +168,12 @@ public class MainActivity extends FragmentActivity
 
         List<String> symbols;
 
-        if (id==0) {
+        if (id==R.id.fav) {
             symbols = loadFromFavorite();
+        } else if (id==R.id.all) {
+
+            symbols = SETFIN.cache_symbols;
+
         } else {
             symbols = SETIndex.DICT.get(id);
         }
@@ -237,7 +224,7 @@ public class MainActivity extends FragmentActivity
             favouriteSymbols.addAll(symbols);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         } finally {
              if (br!=null)
                  try {

@@ -33,7 +33,7 @@ public class SETIndexAsyncTask extends AsyncTask<NavigationView, Void, SETIndex>
         Set<String> sections;
         List<String> symbols;
         MenuItem item;
-        int itemId = Menu.FIRST + 1;
+        int itemId = Menu.FIRST + 2;
         int group = 0;
         int seq = 0;
         for (String industry:industries) {

@@ -1,9 +1,12 @@
 package com.th.eoss.sevenyods;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -69,6 +72,33 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.chart, container, false);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String packageName = "com.th.eoss.setoperator";
+                Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+                if (intent == null) {
+                    // Bring user to the market or let them choose an app?
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=" + packageName));
+                } else {
+                    intent.putExtra("symbol", set.symbol);
+                }
+
+                try {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+                    if (null != intent.resolveActivity(getContext().getPackageManager())) {
+                        getContext().startActivity(intent);
+                    }
+                }
+            }
+        });
+
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -116,7 +146,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedChart.getXAxis().resetAxisMinValue();
         combinedChart.getXAxis().resetAxisMaxValue();
 
-
         BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "Asset");
         assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         assetDataSet.setColors(new int[]{Color.parseColor("#dee8eb"), Color.parseColor("#f2f2ef")});
@@ -132,8 +161,25 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         barData.addDataSet(paidUpCapitalDataSet);
         barData.setBarWidth(0.8f);
 
+        LineDataSet revenueDataSet = new LineDataSet(createEntries(set.historicals, "revenue"), "Revenue");
+        revenueDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        revenueDataSet.setColor(Color.BLUE);
+        revenueDataSet.setDrawValues(false);
+        revenueDataSet.setDrawCircles(false);
+
+        LineDataSet netDataSet = new LineDataSet(createEntries(set.historicals, "netProfit"), "Net");
+        netDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        netDataSet.setColor(Color.CYAN);
+        netDataSet.setDrawValues(false);
+        netDataSet.setDrawCircles(false);
+
+        LineData lineData = new LineData();
+        lineData.addDataSet(revenueDataSet);
+        lineData.addDataSet(netDataSet);
+
         CombinedData combinedData = new CombinedData();
         combinedData.setData(barData);
+        combinedData.setData(lineData);
 
         combinedChart.setDescription(set.symbol);
         combinedChart.setData(combinedData);
@@ -323,6 +369,17 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             x++;
         }
 
+        return entries;
+    }
+
+    private List<Entry> createEntries(List<SETHistorical> historicals, String valueName) {
+        List<Entry> entries = new ArrayList<>();
+
+        int x = 0;
+        for (SETHistorical his:historicals) {
+            entries.add(new Entry(x, his.values.get(valueName)));
+            x ++;
+        }
         return entries;
     }
 
