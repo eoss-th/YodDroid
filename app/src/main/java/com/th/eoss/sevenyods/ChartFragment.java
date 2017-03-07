@@ -45,8 +45,6 @@ import java.util.Locale;
 
 public class ChartFragment extends Fragment implements View.OnClickListener {
 
-    private static ChartFragment chartFragment;
-
     private static DateFormat monthOnlyFormat = new SimpleDateFormat("MMM", Locale.US);
     private static DateFormat yearOnlyFormat = new SimpleDateFormat("yyyy", Locale.US);
 
@@ -60,13 +58,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
     private int daysRangeIndex=0;
 
     private int columnWidth;
-
-    public static ChartFragment chartFragment() {
-        if (chartFragment==null) {
-            chartFragment = new ChartFragment();
-        }
-        return chartFragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,7 +129,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         if (set.historicals==null) {
             combinedChart.setNoDataText("Loading...");
-            new SETFINHistoricalAsyncTask(set).execute();
+            new SETFINHistoricalAsyncTask(set, this).execute();
             return;
         }
 
@@ -224,7 +215,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         if (set.yahooHistory==null) {
             combinedChart.setNoDataText("Loading...");
-            new SETFINYahooHistoryAsyncTask(set).execute();
+            new SETFINYahooHistoryAsyncTask(set, this).execute();
             return;
         }
 
@@ -438,6 +429,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        combinedChart.invalidate();
     }
 
     @Override

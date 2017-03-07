@@ -24,13 +24,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<String> list) {
 
-                SETFINStackedBarFragment.tableFragments();
-
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-
-                SETFINStackedBarFragment.load(list);
 
             }
 

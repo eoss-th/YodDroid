@@ -33,40 +33,18 @@ import java.util.TreeMap;
  * Created by wisarut on 30/9/2559.
  */
 
-public class SETFINStackedBarFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
+public class StackedBarFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
-    private static SETFINStackedBarFragment[] fragments;
-
-    private static final List<String> symbols = new ArrayList<>();
-    private static final Map<String, SETFIN> map = new TreeMap<>();
+    private List<String> symbols = new ArrayList<>();
+    private Map<String, SETFIN> map = new TreeMap<>();
 
     private GridView gridView;
 
-    private String [] columns = new String[0];
-    private int headerIndex;
+    private String [] columns = {"Symbols", "Net Growth %", "E/A Growth %", "P/E", "Last", "Predict MA", "Predict Chg %"};
     private int columnWidth;
     private int fontSize = 9;
 
     private List<SETFINFilterToggleButton> toggleButtons;
-
-    public static SETFINStackedBarFragment[] tableFragments () {
-        if (fragments ==null) {
-            fragments = new SETFINStackedBarFragment[SETFIN.HEADERS.length];
-            for (int i = 0; i< fragments.length; i++) {
-                SETFINStackedBarFragment tableFragment = new SETFINStackedBarFragment();
-                tableFragment.columns = SETFIN.HEADERS[i];
-                tableFragment.headerIndex = i;
-                fragments[i] = tableFragment;
-            }
-        }
-        return fragments;
-    }
-
-    public static void reloadAll() {
-        for (SETFINStackedBarFragment t: fragments) {
-            t.reload();
-        }
-    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -77,7 +55,7 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        columnWidth = size.x / SETFIN.HEADERS[0].length;
+        columnWidth = size.x / columns.length;
 
         LinearLayout head = (LinearLayout) rootView.findViewById(R.id.headerLayout);
         toggleButtons = new ArrayList<>();
@@ -115,31 +93,21 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
-                if (headerIndex==0) {
-
-                    convertView = createAssetView(position, convertView);
-
-                } else if (headerIndex==5) {
-                        /*
-                        new SETQuoteAsyncTask(symbol, new SETQuote.SETQuoteListener() {
-                            @Override
-                            public void onLoaded(SETQuote quote) {
-                                //set.updateQuote(quote);
-                                reload();
-                            }
-                        }).execute();*/
-                } else {
-                   convertView = createTableView(position, convertView);
-                }
-
-                return convertView;
-            }
-
-            private View createAssetView(int position, View convertView) {
                 LinearLayout row;
                 if ( convertView==null ) {
                     convertView = inflater.inflate(R.layout.stacked_row, null);
                     row = (LinearLayout) convertView.findViewById(R.id.rowLayout);
+                    TextView textView;
+                    int id = 0;
+                    for (int i=3; i<columns.length; i++) {
+                        textView = new TextView(getContext());
+                        textView.setId(id++);
+                        textView.setMinWidth(columnWidth);
+                        textView.setMaxWidth(columnWidth);
+                        textView.setTextSize(fontSize);
+                        textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                        row.addView(textView);
+                    }
                 } else {
                     row = (LinearLayout) convertView.findViewById(R.id.rowLayout);
                 }
@@ -152,9 +120,11 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                     if (set!=null) {
                         TextView textView = (TextView) row.findViewById(R.id.symbol);
                         textView.setText(symbol);
+                        textView.getLayoutParams().width = columnWidth;
 
                         LinearLayout asset = (LinearLayout) row.findViewById(R.id.asset);
                         asset.setBackgroundColor(Color.WHITE);
+                        asset.getLayoutParams().width = columnWidth * 2;
 
                         float eaGrowthPercent = set.getFloatValue("E/A Growth %");
 
@@ -201,49 +171,15 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                         net.setBackgroundColor(netColor);
                         float netWidth = Math.abs(set.getFloatValue("N/NG") * netGrowthWidth);
                         net.setLayoutParams(new LinearLayout.LayoutParams((int) netWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-                    }
-                }
-                return convertView;
-            }
 
-            private View createTableView(int position, View convertView) {
-                LinearLayout row;
-                if ( convertView==null ) {
-                    convertView = inflater.inflate(R.layout.row, null);
-                    row = (LinearLayout) convertView.findViewById(R.id.rowLayout);
-                    TextView textView;
-                    int id = 0;
-                    for (String c:columns) {
-                        textView = new TextView(getContext());
-                        textView.setId(id++);
-                        textView.setMinWidth(columnWidth);
-                        textView.setMaxWidth(columnWidth);
-                        textView.setTextSize(fontSize);
-                        row.addView(textView);
-                    }
-                } else {
-                    row = (LinearLayout) convertView.findViewById(R.id.rowLayout);
-                }
-
-                if ( position<symbols.size() ) {
-
-                    String symbol = symbols.get(position);
-                    final SETFIN set = map.get(symbol);
-
-                    if (set!=null) {
-                        TextView textView;
-
-                        for (int i=0; i<SETFIN.HEADERS[headerIndex].length; i++) {
-                            textView= (TextView) row.findViewById(i);
-                            if (i==0) {
-                                textView.setText(symbol);
-                            } else {
-                                textView.setText("" + set.getFloatValue(SETFIN.HEADERS[headerIndex][i]));
-                            }
+                        int id = 0;
+                        for (int i=3; i<columns.length; i++) {
+                            textView= (TextView) row.findViewById(id++);
+                            textView.setText("" + set.getFloatValue(columns[i]));
                         }
-
                     }
                 }
+
                 return convertView;
             }
 
@@ -257,7 +193,6 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
                     String symbol = symbols.get(position);
                     SETFIN set = SETFIN.cache.get(symbol);
                     ((MainActivity)getActivity()).displayChart(set);
-                    ChartFragment.chartFragment().loadHistoricals(set);
                 }
             }
         });
@@ -277,7 +212,7 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
         return rootView;
     }
 
-    public static void load(List<String> list) {
+    public void load(List<String> list) {
         symbols.clear();
         map.clear();
 
@@ -295,7 +230,7 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
             }
         }
 
-        reloadAll();
+        reload();
     }
 
     public void reload() {
@@ -304,7 +239,7 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
         updateToggle();
     }
 
-    public static void clear() {
+    public void clear() {
         symbols.clear();
         SETFINFilterToggleButton.clear();
     }
@@ -377,25 +312,23 @@ public class SETFINStackedBarFragment extends Fragment implements View.OnClickLi
             symbols.addAll(resultSortedSymbol);
         }
 
-        reloadAll();
+        reload();
     }
 
     private void applyFilter() {
         Set<String> symbols = map.keySet();
-        SETFINStackedBarFragment.symbols.clear();
+        this.symbols.clear();
         for (String s:symbols) {
-            SETFINStackedBarFragment.symbols.add(s);
+            this.symbols.add(s);
         }
         SETFIN setfin;
-        Filter filter;
-        String filterText;
         for ( String s:symbols ) {
             setfin = map.get(s);
             if (!SETFINFilterToggleButton.isValid(setfin))
-                SETFINStackedBarFragment.symbols.remove(s);
+                this.symbols.remove(s);
         }
 
-        reloadAll();
+        reload();
     }
 
     @Override

@@ -20,9 +20,9 @@ public class SETFIN {
     public static final Map<String, SETFIN> cache = new TreeMap<>();
 
     public static final String [][] HEADERS = {
-            {"Symbols", "Net Growth %", "E/A Growth %"},
-            {"Symbols", "P/E", "Last"},
-            {"Symbols", "Predict MA", "Predict Chg %"},
+            {"Symbols", "Net Growth %", "E/A Growth %", "P/E", "Last", "Predict MA", "Predict Chg %"},
+            /*{"Symbols", "P/E", "Last", "Predict MA", "Predict Chg %"},*/
+            /*{"Symbols", "Predict MA", "Predict Chg %"},*/
     };
 
     public static final String [] MEAN_HEADERS = {

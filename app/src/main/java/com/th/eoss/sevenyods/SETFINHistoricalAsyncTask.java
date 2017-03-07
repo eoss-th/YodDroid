@@ -2,6 +2,7 @@ package com.th.eoss.sevenyods;
 
 import android.os.AsyncTask;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETHistorical;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class SETFINHistoricalAsyncTask extends AsyncTask<Void, Void, List<SETHistorical>> {
 
     private SETFIN set;
+    private ChartFragment chartFragment;
 
-    public SETFINHistoricalAsyncTask(SETFIN set) {
+    public SETFINHistoricalAsyncTask(SETFIN set, ChartFragment chartFragment) {
         this.set = set;
+        this.chartFragment = chartFragment;
     }
 
     @Override
@@ -27,6 +30,6 @@ public class SETFINHistoricalAsyncTask extends AsyncTask<Void, Void, List<SETHis
     @Override
     protected void onPostExecute(List<SETHistorical> historicals) {
         set.historicals = historicals;
-        ChartFragment.chartFragment().loadHistoricals(set);
+        chartFragment.loadHistoricals(set);
     }
 }

@@ -1,20 +1,13 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +33,10 @@ import java.util.TreeSet;
 
 public class MainActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private StackedBarFragment stackedBarFragment = new StackedBarFragment();
+
+    private ChartFragment chartFragment = new ChartFragment();
 
     private ViewPager pager;
     private Toolbar toolbar;
@@ -91,7 +88,7 @@ public class MainActivity extends FragmentActivity
                 }
 
                 if (!symbols.isEmpty()) {
-                    SETFINStackedBarFragment.load(symbols);
+                    stackedBarFragment.load(symbols);
                 }
 
                 drawer.closeDrawers();
@@ -110,6 +107,8 @@ public class MainActivity extends FragmentActivity
                 return false;
             }
         });
+
+        stackedBarFragment.load(SETFIN.cache_symbols);
     }
 
     @Override
@@ -179,7 +178,7 @@ public class MainActivity extends FragmentActivity
         }
 
         if (symbols!=null) {
-            SETFINStackedBarFragment.load(symbols);
+            stackedBarFragment.load(symbols);
         }
 
         group = id;
@@ -191,20 +190,20 @@ public class MainActivity extends FragmentActivity
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
+        private Fragment [] fragments = new Fragment[] {stackedBarFragment, chartFragment};
+
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (position==getCount()-1)
-                return ChartFragment.chartFragment();
-            return SETFINStackedBarFragment.tableFragments()[position];
+            return fragments [position];
         }
 
         @Override
         public int getCount() {
-            return SETFINStackedBarFragment.tableFragments().length + 1;
+            return fragments.length;
         }
     }
 
@@ -272,8 +271,8 @@ public class MainActivity extends FragmentActivity
     }
 
     public void displayChart(SETFIN set) {
-        pager.setCurrentItem(3);
-        //ChartFragment.chartFragment().loadYahoo(set);
+        pager.setCurrentItem(2);
+        chartFragment.loadHistoricals(set);
     }
 
     /*
