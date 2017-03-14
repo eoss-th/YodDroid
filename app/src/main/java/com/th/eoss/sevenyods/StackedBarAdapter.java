@@ -2,6 +2,7 @@ package com.th.eoss.sevenyods;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.StackedBarViewHolder> {
 
-    private List<String> symbols;
+    private final List<String> symbols;
     private SETFINListener listener;
     private int stackedWidth;
 

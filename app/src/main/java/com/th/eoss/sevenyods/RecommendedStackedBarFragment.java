@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.th.eoss.util.Filter;
 import com.th.eoss.util.SETFIN;
 
 /**
@@ -21,12 +22,18 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         super.onAttach(context);
 
         load(SETFIN.cache_symbols);
+
+        filterSortManager.clear();
+        filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter());
+        filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter());
+        filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter());
+        filterSortManager.put("Predict Chg %", new Filter.HigherOrEqualThanFilter());
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.content_main, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.recommended_main, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         adapter = new StackedBarAdapter(symbols, this, getColumnWidth(2));
@@ -36,6 +43,12 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         recyclerView.setAdapter(adapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        applyFilter();
     }
 
 }

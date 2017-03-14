@@ -49,6 +49,10 @@ public class FilterSortManager {
         toggleButton.invalidate();
     }
 
+    public void put(String valueName, Filter filter) {
+        filterMap.put(valueName, filter);
+    }
+
     public boolean isValid (SETFIN set) {
         Filter filter;
         Set<String> valueNames = filterMap.keySet();

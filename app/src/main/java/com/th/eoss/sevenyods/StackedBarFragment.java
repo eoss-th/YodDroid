@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ToggleButton;
 
@@ -69,6 +70,9 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
 
         if (adapter!=null)
             adapter.notifyDataSetChanged();
+
+        if (recyclerView!=null)
+            recyclerView.invalidate();
     }
 
     private void toggleSort(ToggleButton toggleButton) {
@@ -115,7 +119,7 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         dialog.show();
     }
 
-    private void applySort() {
+    protected void applySort() {
 
         Map<String, SETFIN> sortedMap = filterSortManager.sort(map);
 
@@ -134,7 +138,7 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         reload();
     }
 
-    private void applyFilter() {
+    protected void applyFilter() {
         Set<String> symbols = map.keySet();
         this.symbols.clear();
         for (String s:symbols) {
@@ -147,12 +151,8 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
                 this.symbols.remove(s);
         }
 
-        reload();
-    }
+        Log.i("Filter Applied", "" + this.symbols.size());
 
-    @Override
-    public void onResume() {
-        super.onResume();
         reload();
     }
 
