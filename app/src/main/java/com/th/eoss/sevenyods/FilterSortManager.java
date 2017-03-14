@@ -3,7 +3,6 @@ package com.th.eoss.sevenyods;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.ToggleButton;
 
@@ -21,22 +20,21 @@ import java.util.TreeMap;
  * Created by wisarut on 4/10/2559.
  */
 
-public class SETFINFilterToggleButton extends ToggleButton {
+public class FilterSortManager {
 
-    private static Map<String, Filter> filterMap = new HashMap<>();
-    private static Map<String, Boolean> sortMap = new HashMap<>();
+    private Map<String, Filter> filterMap = new HashMap<>();
+    private Map<String, Boolean> sortMap = new HashMap<>();
 
-    public SETFINFilterToggleButton(Context context, String text) {
-        super(context);
+    public void init(ToggleButton button, String text) {
 
-        setText(text);
-        setTextOff(text);
-        setTextOn(text);
+        button.setText(text);
+        button.setTextOff(text);
+        button.setTextOn(text);
 
-        update();
+        update(button);
     }
 
-    public static void toggleSort(SETFINFilterToggleButton toggleButton) {
+    public void toggleSort(ToggleButton toggleButton) {
 
         String textOff = toggleButton.getTextOff().toString();
         Boolean sort = sortMap.get(textOff);
@@ -51,7 +49,7 @@ public class SETFINFilterToggleButton extends ToggleButton {
         toggleButton.invalidate();
     }
 
-    public static boolean isValid (SETFIN set) {
+    public boolean isValid (SETFIN set) {
         Filter filter;
         Set<String> valueNames = filterMap.keySet();
         for (String valueName:valueNames) {
@@ -63,7 +61,7 @@ public class SETFINFilterToggleButton extends ToggleButton {
         return true;
     }
 
-    public static Map<String, SETFIN> sort(Map<String, SETFIN> map) {
+    public Map<String, SETFIN> sort(Map<String, SETFIN> map) {
         Set<String> valueNames = sortMap.keySet();
         Boolean sort;
         for (String valueName:valueNames) {
@@ -91,7 +89,7 @@ public class SETFINFilterToggleButton extends ToggleButton {
         return null;
     }
 
-    public static Dialog buildFilterDialog (Activity activity, final SETFINFilterToggleButton toggleButton, final FilterToggleButtonListener filterToggleButtonListener) {
+    public Dialog buildFilterDialog (Activity activity, final ToggleButton toggleButton, final FilterToggleButtonManagerListener filterToggleButtonManagerListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final String textOff = toggleButton.getTextOff().toString();
         builder.setTitle(textOff + " Filter");
@@ -102,8 +100,8 @@ public class SETFINFilterToggleButton extends ToggleButton {
                     if ( which==0 ) {
                         filterMap.remove(textOff);
                     }
-                    if (filterToggleButtonListener!=null)
-                        filterToggleButtonListener.onChange();
+                    if (filterToggleButtonManagerListener !=null)
+                        filterToggleButtonManagerListener.onChange();
                 }
             });
         } else {
@@ -127,8 +125,8 @@ public class SETFINFilterToggleButton extends ToggleButton {
                         if ( which==0 ) {
                             filterMap.put(textOff, filter);
                         }
-                        if (filterToggleButtonListener!=null)
-                            filterToggleButtonListener.onChange();
+                        if (filterToggleButtonManagerListener !=null)
+                            filterToggleButtonManagerListener.onChange();
                     }
                 });
             }
@@ -136,32 +134,32 @@ public class SETFINFilterToggleButton extends ToggleButton {
         return builder.create();
     }
 
-    public void update() {
-        Filter filter = filterMap.get(getTextOff());
+    public void update(ToggleButton button) {
+        Filter filter = filterMap.get(button.getTextOff());
         if ( filter!=null ) {
             if (filter instanceof Filter.LowerOrEqualThanFilter) {
-                setTextOn(getTextOff() + " <");
+                button.setTextOn(button.getTextOff() + " <");
             } else {
-                setTextOn(getTextOff() + " >");
+                button.setTextOn(button.getTextOff() + " >");
             }
         } else {
-            setTextOn(getTextOff().toString());
+            button.setTextOn(button.getTextOff().toString());
         }
 
-        Boolean sort = sortMap.get(getTextOff());
+        Boolean sort = sortMap.get(button.getTextOff());
 
-        setChecked(filter!=null || sort !=null);
+        button.setChecked(filter!=null || sort !=null);
     }
 
-    public interface FilterToggleButtonListener {
+    public interface FilterToggleButtonManagerListener {
         void onChange();
     }
 
-    public static boolean isFilter(String text) {
+    public boolean isFilter(String text) {
         return SETFIN.LOW_IS_BETTER.contains(text) || SETFIN.HIGH_IS_BETTER.contains(text);
     }
 
-    public static void clear() {
+    public void clear() {
         sortMap.clear();
         filterMap.clear();
     }

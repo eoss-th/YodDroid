@@ -4,16 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ToggleButton;
 
 import com.th.eoss.util.Mean;
 import com.th.eoss.util.SETFIN;
@@ -34,6 +31,8 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
     private Map<String, SETFIN> map = new TreeMap<>();//For Sorting
 
     protected List<String> symbols = new ArrayList<>();
+
+    protected FilterSortManager filterSortManager = new FilterSortManager();
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
 
@@ -72,8 +71,8 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
             adapter.notifyDataSetChanged();
     }
 
-    private void toggleSort(final SETFINFilterToggleButton toggleButton) {
-        SETFINFilterToggleButton.toggleSort(toggleButton);
+    private void toggleSort(ToggleButton toggleButton) {
+        filterSortManager.toggleSort(toggleButton);
         applySort();
     }
 
@@ -106,8 +105,8 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         builder.show();
     }
 
-    private void popupFilterDialog(final SETFINFilterToggleButton toggleButton) {
-        Dialog dialog = SETFINFilterToggleButton.buildFilterDialog(getActivity(), toggleButton, new SETFINFilterToggleButton.FilterToggleButtonListener() {
+    private void popupFilterDialog(ToggleButton toggleButton) {
+        Dialog dialog = filterSortManager.buildFilterDialog(getActivity(), toggleButton, new FilterSortManager.FilterToggleButtonManagerListener() {
             @Override
             public void onChange() {
                 applyFilter();
@@ -118,7 +117,7 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
 
     private void applySort() {
 
-        Map<String, SETFIN> sortedMap = SETFINFilterToggleButton.sort(map);
+        Map<String, SETFIN> sortedMap = filterSortManager.sort(map);
 
         if ( sortedMap!=null ) {
             sortedMap.putAll(map);
@@ -144,7 +143,7 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         SETFIN setfin;
         for ( String s:symbols ) {
             setfin = map.get(s);
-            if (!SETFINFilterToggleButton.isValid(setfin))
+            if (!filterSortManager.isValid(setfin))
                 this.symbols.remove(s);
         }
 
@@ -159,13 +158,13 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        toggleSort((SETFINFilterToggleButton)view);
+        toggleSort((ToggleButton)view);
     }
 
     @Override
     public boolean onLongClick(View view) {
-        final SETFINFilterToggleButton toggleButton = (SETFINFilterToggleButton) view;
-        if (SETFINFilterToggleButton.isFilter(toggleButton.getTextOff().toString())) {
+        final ToggleButton toggleButton = (ToggleButton) view;
+        if (filterSortManager.isFilter(toggleButton.getTextOff().toString())) {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {

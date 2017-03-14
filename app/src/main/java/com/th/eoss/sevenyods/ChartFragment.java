@@ -215,7 +215,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         if (set.yahooHistory==null) {
             combinedChart.setNoDataText("Loading...");
             combinedChart.invalidate();
-            new SETFINYahooHistoryAsyncTask(set, this).execute();
+            new YahooHistoryAsyncTask(set, this).execute();
             return;
         }
 
