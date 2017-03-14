@@ -28,7 +28,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.AxisValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETHistorical;
 import com.th.eoss.util.YahooHistory;
@@ -118,6 +118,8 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             head.addView(button);
         }
 
+        combinedChart.setNoDataText("Please select a Symbol");
+
         return rootView;
     }
 
@@ -129,13 +131,14 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         if (set.historicals==null) {
             combinedChart.setNoDataText("Loading...");
+            combinedChart.invalidate();
             new SETFINHistoricalAsyncTask(set, this).execute();
             return;
         }
 
         combinedChart.clear();
-        combinedChart.getXAxis().resetAxisMinValue();
-        combinedChart.getXAxis().resetAxisMaxValue();
+        combinedChart.getXAxis().resetAxisMinimum();
+        combinedChart.getXAxis().resetAxisMaximum();
 
         BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "Asset");
         assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
@@ -172,10 +175,10 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedData.setData(barData);
         combinedData.setData(lineData);
 
-        combinedChart.setDescription(set.symbol);
+        combinedChart.getDescription().setText(set.symbol);
         combinedChart.setData(combinedData);
 
-        combinedChart.getXAxis().setValueFormatter(new AxisValueFormatter() {
+        combinedChart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 String date="";
@@ -186,10 +189,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
                 return date;
             }
 
-            @Override
-            public int getDecimalDigits() {
-                return 0;
-            }
         });
 
         combinedChart.getAxisLeft().setAxisMinValue(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
@@ -215,13 +214,14 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         if (set.yahooHistory==null) {
             combinedChart.setNoDataText("Loading...");
+            combinedChart.invalidate();
             new SETFINYahooHistoryAsyncTask(set, this).execute();
             return;
         }
 
         combinedChart.clear();
-        combinedChart.getXAxis().resetAxisMinValue();
-        combinedChart.getXAxis().resetAxisMaxValue();
+        combinedChart.getXAxis().resetAxisMinimum();
+        combinedChart.getXAxis().resetAxisMaximum();
 
         final YahooHistory.HiLo [] hiloes = set.yahooHistory.hilos;
 
@@ -282,7 +282,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedData.setData(barData);
         combinedData.setData(candleData);
 
-        combinedChart.setDescription(set.yahooHistory.symbol);
+        combinedChart.getDescription().setText(set.symbol);
         combinedChart.setData(combinedData);
 
         final DateFormat dateFormatter;
@@ -292,7 +292,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             dateFormatter = yearOnlyFormat;
         }
 
-        combinedChart.getXAxis().setValueFormatter(new AxisValueFormatter() {
+        combinedChart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 String date="";
@@ -307,10 +307,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
                 return date;
             }
 
-            @Override
-            public int getDecimalDigits() {
-                return 0;
-            }
         });
 
         combinedChart.getAxisLeft().setAxisMinValue(volumeDataSet.getYMin());

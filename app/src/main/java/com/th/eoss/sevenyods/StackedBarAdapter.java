@@ -22,7 +22,8 @@ import java.util.Map;
 public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.StackedBarViewHolder> {
 
     private List<String> symbols;
-    private Map<String, SETFIN> map;
+    private SETFINListener listener;
+    private int stackedWidth;
 
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
@@ -45,9 +46,12 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
     }
 
-    public StackedBarAdapter(List<String> symbols, Map<String, SETFIN> map) {
+    public StackedBarAdapter(List<String> symbols, SETFINListener listener, int stackedWidth) {
         this.symbols = symbols;
-        this.map = map;
+        this.listener = listener;
+        this.stackedWidth = stackedWidth;
+
+
     }
 
     @Override
@@ -65,6 +69,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             if (set!=null) {
 
                 holder.asset.setBackgroundColor(Color.WHITE);
+                holder.asset.getLayoutParams().width = stackedWidth;
 
                 float eaGrowthPercent = set.getFloatValue("E/A Growth %");
 
@@ -111,6 +116,14 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
                 holder.symbol.setText(symbol);
                 holder.last.setText("" + set.getFloatValue("Last"));
                 holder.pe.setText("" + set.getFloatValue("P/E"));
+
+                holder.asset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (listener!=null)
+                            listener.onClicked(set);
+                    }
+                });
             }
         }
     }

@@ -20,7 +20,7 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:id="@+id/asset"
@@ -68,45 +68,50 @@
 
             <TextView
                 android:text="TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/symbol"
                 android:layout_below="@id/asset"
-                android:paddingLeft="20dp"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="5dp"
+                />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/last"
+                android:layout_below="@id/asset"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
                 />
 
             <TextView
                 android:text="Last : "
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/asset"
-                android:paddingLeft="80dp"
+                android:layout_toLeftOf="@id/last"
+                android:paddingRight="5dp"
                 />
 
             <TextView
                 android:text="TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/last"
-                android:layout_below="@id/asset"
-                android:paddingLeft="120dp"
+                android:id="@+id/pe"
+                android:layout_below="@id/symbol"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
                 />
 
             <TextView
                 android:text="P/E : "
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/symbol"
-                android:paddingLeft="80dp"
-                />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/symbol"
-                android:paddingLeft="120dp"
+                android:layout_toLeftOf="@id/pe"
+                android:paddingRight="5dp"
                 />
         </RelativeLayout>
 

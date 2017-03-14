@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,34 +29,20 @@ import java.util.TreeMap;
  * Created by wisarut on 30/9/2559.
  */
 
-public class StackedBarFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
+public abstract class StackedBarFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener, SETFINListener {
 
-    private List<String> symbols = new ArrayList<>();
-    private Map<String, SETFIN> map = new TreeMap<>();
+    private Map<String, SETFIN> map = new TreeMap<>();//For Sorting
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    protected List<String> symbols = new ArrayList<>();
+    protected RecyclerView recyclerView;
+    protected RecyclerView.Adapter adapter;
+
+    protected DisplayMetrics displayMetrics = new DisplayMetrics();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        load(SETFIN.cache_symbols);
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.content_main, container, false);
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        adapter = new StackedBarAdapter(symbols, map);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-        return rootView;
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
     }
 
     public void load(List<String> list) {
@@ -189,4 +176,12 @@ public class StackedBarFragment extends Fragment implements View.OnClickListener
         return false;
     }
 
+    @Override
+    public void onClicked(SETFIN setfin) {
+        ((MainActivity) getActivity()).displayChart(setfin);
+    }
+
+    protected int getColumnWidth(int numColumns) {
+        return (int) ((displayMetrics.widthPixels / numColumns) * 0.8);
+    }
 }

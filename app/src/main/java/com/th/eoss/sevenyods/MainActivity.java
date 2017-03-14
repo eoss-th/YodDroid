@@ -1,6 +1,7 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETIndex;
@@ -35,11 +37,12 @@ import java.util.TreeSet;
 public class MainActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private StackedBarFragment stackedBarFragment = new StackedBarFragment();
-
+    private StackedBarFragment filteredStackedBarFragment = new FilteredStackedBarFragment();
+    private StackedBarFragment recommendedStackedBarFragment = new RecommendedStackedBarFragment();
     private ChartFragment chartFragment = new ChartFragment();
 
     private ViewPager pager;
+    private DrawerLayout drawer;
     private Toolbar toolbar;
     private TabLayout tab;
 
@@ -52,6 +55,7 @@ public class MainActivity extends FragmentActivity
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
         pager = (ViewPager) findViewById(R.id.pager);
         FragmentPagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -60,7 +64,16 @@ public class MainActivity extends FragmentActivity
         tab = (TabLayout) findViewById(R.id.tab);
         tab.setupWithViewPager(pager);
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        int [] icons = {android.R.drawable.ic_menu_zoom, android.R.drawable.star_big_on, android.R.drawable.ic_menu_gallery};
+
+        TextView text;
+        for (int i = 0; i < tab.getTabCount(); i++) {
+            text = new TextView(getApplicationContext());
+            text.setCompoundDrawablesWithIntrinsicBounds(0, icons[i], 0, 0);
+            tab.getTabAt(i).setCustomView(text);
+        }
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -91,10 +104,11 @@ public class MainActivity extends FragmentActivity
                 }
 
                 if (!symbols.isEmpty()) {
-                    stackedBarFragment.load(symbols);
+                    filteredStackedBarFragment.load(symbols);
                 }
 
-                drawer.closeDrawers();
+                drawer.closeDrawer(GravityCompat.START);
+                pager.setCurrentItem(0);
 
                 return false;
             }
@@ -110,6 +124,8 @@ public class MainActivity extends FragmentActivity
                 return false;
             }
         });
+
+        pager.setCurrentItem(1);
 
     }
 
@@ -151,7 +167,7 @@ public class MainActivity extends FragmentActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
         String title = item.getTitle().toString();
 
@@ -161,11 +177,6 @@ public class MainActivity extends FragmentActivity
     }
 
     private void loadGroup(int id, String title) {
-
-        toolbar.setTitle(title);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
 
         List<String> symbols;
 
@@ -180,19 +191,20 @@ public class MainActivity extends FragmentActivity
         }
 
         if (symbols!=null) {
-            stackedBarFragment.load(symbols);
+            filteredStackedBarFragment.load(symbols);
         }
+
+        toolbar.setTitle(title);
+
+        drawer.closeDrawer(GravityCompat.START);
+        pager.setCurrentItem(0);
 
         group = id;
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
-        private Fragment [] fragments = new Fragment[] {stackedBarFragment, chartFragment};
+        private Fragment [] fragments = new Fragment[] {filteredStackedBarFragment, recommendedStackedBarFragment, chartFragment};
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
