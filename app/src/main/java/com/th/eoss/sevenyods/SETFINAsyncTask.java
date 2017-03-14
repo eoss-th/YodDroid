@@ -3,7 +3,6 @@ package com.th.eoss.sevenyods;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.th.eoss.old.SETFINStackedBarFragment;
 import com.th.eoss.util.SETFIN;
 
 import java.util.ArrayList;
@@ -31,6 +30,5 @@ public class SETFINAsyncTask extends AsyncTask<Void, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> list) {
         Log.d("EOSS", "Successs" + list.size());
-        SETFINStackedBarFragment.load(list);
     }
 }

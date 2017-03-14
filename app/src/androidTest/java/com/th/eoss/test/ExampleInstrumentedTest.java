@@ -1,4 +1,4 @@
-package com.example.wisarut.yods;
+package com.th.eoss.test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -2,10 +2,11 @@ package com.th.eoss.sevenyods;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -40,6 +41,7 @@ public class MainActivity extends FragmentActivity
 
     private ViewPager pager;
     private Toolbar toolbar;
+    private TabLayout tab;
 
     private Set<String> favouriteSymbols = new TreeSet<>();
     private int group;
@@ -50,21 +52,22 @@ public class MainActivity extends FragmentActivity
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
-// Instantiate a ViewPager and a PagerAdapter.
         pager = (ViewPager) findViewById(R.id.pager);
-        FragmentStatePagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        FragmentPagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(mPagerAdapter);
+
+        tab = (TabLayout) findViewById(R.id.tab);
+        tab.setupWithViewPager(pager);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+           navigationView.setNavigationItemSelectedListener(this);
 
         new SETIndexAsyncTask().execute(navigationView);
 
@@ -108,7 +111,6 @@ public class MainActivity extends FragmentActivity
             }
         });
 
-        stackedBarFragment.load(SETFIN.cache_symbols);
     }
 
     @Override
@@ -188,7 +190,7 @@ public class MainActivity extends FragmentActivity
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
      */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
         private Fragment [] fragments = new Fragment[] {stackedBarFragment, chartFragment};
 

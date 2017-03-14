@@ -1,4 +1,4 @@
-package com.example.wisarut.yods;
+package com.th.eoss.test;
 
 import com.th.eoss.util.LinearRegression;
 import com.th.eoss.util.SETIndex;
