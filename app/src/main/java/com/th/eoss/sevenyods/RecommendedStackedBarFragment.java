@@ -27,7 +27,8 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter());
         filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter());
         filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter());
-        filterSortManager.put("Predict Chg %", new Filter.HigherOrEqualThanFilter());
+        filterSortManager.put("Predict %", new Filter.HigherOrEqualThanFilter());
+
     }
 
     @Override
@@ -43,12 +44,6 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         recyclerView.setAdapter(adapter);
 
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        applyFilter();
     }
 
 }

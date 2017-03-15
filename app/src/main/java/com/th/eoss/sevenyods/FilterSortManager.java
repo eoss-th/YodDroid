@@ -25,28 +25,17 @@ public class FilterSortManager {
     private Map<String, Filter> filterMap = new HashMap<>();
     private Map<String, Boolean> sortMap = new HashMap<>();
 
-    public void init(ToggleButton button, String text) {
+    public void toggleSort(String valueName) {
 
-        button.setText(text);
-        button.setTextOff(text);
-        button.setTextOn(text);
-
-        update(button);
-    }
-
-    public void toggleSort(ToggleButton toggleButton) {
-
-        String textOff = toggleButton.getTextOff().toString();
-        Boolean sort = sortMap.get(textOff);
+        Boolean sort = sortMap.get(valueName);
 
         sortMap.clear();
         if (sort==null || !sort) {
-            sortMap.put(textOff, true);
+            sortMap.put(valueName, true);
         } else {
-            sortMap.put(textOff, false);
+            sortMap.put(valueName, false);
         }
 
-        toggleButton.invalidate();
     }
 
     public void put(String valueName, Filter filter) {
@@ -76,7 +65,7 @@ public class FilterSortManager {
                 } else {
                     return new TreeMap<>(new SETFINComparator.AscendingSymbolValueComparator(map, valueName));
                 }
-            } else if (valueName.equals("Pay Date")) {
+            } else if (valueName.equals("XD")) {
                 if (sort) {
                     return new TreeMap<>(new SETFINComparator.DecendingLongValueComparator(map, valueName));
                 } else {
@@ -93,16 +82,15 @@ public class FilterSortManager {
         return null;
     }
 
-    public Dialog buildFilterDialog (Activity activity, final ToggleButton toggleButton, final FilterToggleButtonManagerListener filterToggleButtonManagerListener) {
+    public Dialog buildFilterDialog (Activity activity, final String valueName, String valueTitle, final FilterToggleButtonManagerListener filterToggleButtonManagerListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        final String textOff = toggleButton.getTextOff().toString();
-        builder.setTitle(textOff + " Filter");
+        builder.setTitle(valueTitle + " Filter");
 
-        if (filterMap.get(textOff)!=null) {
+        if (filterMap.get(valueName)!=null) {
             builder.setItems(new String[]{"Clear", "Cancel"}, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if ( which==0 ) {
-                        filterMap.remove(textOff);
+                        filterMap.remove(valueName);
                     }
                     if (filterToggleButtonManagerListener !=null)
                         filterToggleButtonManagerListener.onChange();
@@ -112,10 +100,10 @@ public class FilterSortManager {
             String [] filters;
             final Filter filter;
 
-            if ( SETFIN.LOW_IS_BETTER.contains(textOff) ) {
+            if ( SETFIN.LOW_IS_BETTER.contains(valueName) ) {
                 filters = new String[] {"Lower than Average", "Cancel"};
                 filter = new Filter.LowerOrEqualThanFilter();
-            } else if (SETFIN.HIGH_IS_BETTER.contains(textOff)) {
+            } else if (SETFIN.HIGH_IS_BETTER.contains(valueName)) {
                 filters = new String[] {"Higher than Average", "Cancel"};
                 filter = new Filter.HigherOrEqualThanFilter();
             } else {
@@ -127,7 +115,7 @@ public class FilterSortManager {
                 builder.setItems(filters, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if ( which==0 ) {
-                            filterMap.put(textOff, filter);
+                            filterMap.put(valueName, filter);
                         }
                         if (filterToggleButtonManagerListener !=null)
                             filterToggleButtonManagerListener.onChange();
@@ -138,8 +126,8 @@ public class FilterSortManager {
         return builder.create();
     }
 
-    public void update(ToggleButton button) {
-        Filter filter = filterMap.get(button.getTextOff());
+    public void update(String valueName, ToggleButton button) {
+        Filter filter = filterMap.get(valueName);
         if ( filter!=null ) {
             if (filter instanceof Filter.LowerOrEqualThanFilter) {
                 button.setTextOn(button.getTextOff() + " <");
@@ -150,7 +138,7 @@ public class FilterSortManager {
             button.setTextOn(button.getTextOff().toString());
         }
 
-        Boolean sort = sortMap.get(button.getTextOff());
+        Boolean sort = sortMap.get(valueName);
 
         button.setChecked(filter!=null || sort !=null);
     }

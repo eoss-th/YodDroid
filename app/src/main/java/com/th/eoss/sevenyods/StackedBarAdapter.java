@@ -51,8 +51,6 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
         this.symbols = symbols;
         this.listener = listener;
         this.stackedWidth = stackedWidth;
-
-
     }
 
     @Override
@@ -123,6 +121,15 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
                     public void onClick(View view) {
                         if (listener!=null)
                             listener.onClicked(set);
+                    }
+                });
+
+                holder.asset.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (listener!=null)
+                            listener.onLongClicked(set);
+                        return false;
                     }
                 });
             }

@@ -1,17 +1,11 @@
 package com.th.eoss.sevenyods;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.ToggleButton;
 
 import com.th.eoss.util.Mean;
 import com.th.eoss.util.SETFIN;
@@ -27,11 +21,10 @@ import java.util.TreeMap;
  * Created by wisarut on 30/9/2559.
  */
 
-public abstract class StackedBarFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener, SETFINListener {
-
-    private Map<String, SETFIN> map = new TreeMap<>();//For Sorting
+public abstract class StackedBarFragment extends Fragment implements SETFINListener {
 
     protected List<String> symbols = new ArrayList<>();
+    private Map<String, SETFIN> map = new TreeMap<>();
 
     protected FilterSortManager filterSortManager = new FilterSortManager();
     protected RecyclerView recyclerView;
@@ -45,19 +38,30 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        applySort();
+        applyFilter();
+    }
+
     public void load(List<String> list) {
+
         symbols.clear();
         map.clear();
 
+        symbols.addAll(list);
+
         SETFIN set;
         for (String symbol:list) {
-            symbols.add(symbol);
+
             set = SETFIN.cache.get(symbol);
 
             if (set!=null) {
                 map.put(symbol, set);
 
-                for ( String head:SETFIN.MEAN_HEADERS) {
+                for (String head:SETFIN.MEAN_HEADERS) {
                     Mean.add(head, set.getFloatValue(head));
                 }
             }
@@ -66,18 +70,53 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         reload();
     }
 
-    public void reload() {
-
-        if (adapter!=null)
-            adapter.notifyDataSetChanged();
-
-        if (recyclerView!=null)
-            recyclerView.invalidate();
+    @Override
+    public void onClicked(SETFIN setfin) {
+        ((MainActivity) getActivity()).displayChart(setfin);
     }
 
-    private void toggleSort(ToggleButton toggleButton) {
-        filterSortManager.toggleSort(toggleButton);
-        applySort();
+    @Override
+    public void onLongClicked(SETFIN setfin) {
+        popupFavoriteDialog(setfin);
+    }
+
+    protected int getColumnWidth(int numColumns) {
+        return (int) ((displayMetrics.widthPixels / numColumns) * 0.8);
+    }
+
+    protected final void applySort() {
+
+        Map<String, SETFIN> sortedMap = filterSortManager.sort(map);
+
+        if ( sortedMap!=null ) {
+            sortedMap.putAll(map);
+            Set<String> sortedSymbols = sortedMap.keySet();
+            List<String> resultSortedSymbol = new ArrayList<>();
+            for (String s:sortedSymbols) {
+                if (symbols.contains(s))
+                    resultSortedSymbol.add(s);
+            }
+            symbols.clear();
+            symbols.addAll(resultSortedSymbol);
+        }
+
+        reload();
+    }
+
+    protected final void applyFilter() {
+        Set<String> symbols = map.keySet();
+        this.symbols.clear();
+        for (String s:symbols) {
+            this.symbols.add(s);
+        }
+        SETFIN setfin;
+        for ( String s:symbols ) {
+            setfin = map.get(s);
+            if (!filterSortManager.isValid(setfin))
+                this.symbols.remove(s);
+        }
+
+        reload();
     }
 
     private void popupFavoriteDialog(final SETFIN setfin) {
@@ -109,78 +148,12 @@ public abstract class StackedBarFragment extends Fragment implements View.OnClic
         builder.show();
     }
 
-    private void popupFilterDialog(ToggleButton toggleButton) {
-        Dialog dialog = filterSortManager.buildFilterDialog(getActivity(), toggleButton, new FilterSortManager.FilterToggleButtonManagerListener() {
-            @Override
-            public void onChange() {
-                applyFilter();
-            }
-        });
-        dialog.show();
-    }
+    private void reload() {
 
-    protected void applySort() {
+        if (adapter!=null)
+            adapter.notifyDataSetChanged();
 
-        Map<String, SETFIN> sortedMap = filterSortManager.sort(map);
-
-        if ( sortedMap!=null ) {
-            sortedMap.putAll(map);
-            Set<String> sortedSymbols = sortedMap.keySet();
-            List<String> resultSortedSymbol = new ArrayList<>();
-            for (String s:sortedSymbols) {
-                if (symbols.contains(s))
-                    resultSortedSymbol.add(s);
-            }
-            symbols.clear();
-            symbols.addAll(resultSortedSymbol);
-        }
-
-        reload();
-    }
-
-    protected void applyFilter() {
-        Set<String> symbols = map.keySet();
-        this.symbols.clear();
-        for (String s:symbols) {
-            this.symbols.add(s);
-        }
-        SETFIN setfin;
-        for ( String s:symbols ) {
-            setfin = map.get(s);
-            if (!filterSortManager.isValid(setfin))
-                this.symbols.remove(s);
-        }
-
-        Log.i("Filter Applied", "" + this.symbols.size());
-
-        reload();
-    }
-
-    @Override
-    public void onClick(View view) {
-        toggleSort((ToggleButton)view);
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        final ToggleButton toggleButton = (ToggleButton) view;
-        if (filterSortManager.isFilter(toggleButton.getTextOff().toString())) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    popupFilterDialog(toggleButton);
-                }
-            });
-        }
-        return false;
-    }
-
-    @Override
-    public void onClicked(SETFIN setfin) {
-        ((MainActivity) getActivity()).displayChart(setfin);
-    }
-
-    protected int getColumnWidth(int numColumns) {
-        return (int) ((displayMetrics.widthPixels / numColumns) * 0.8);
+        if (recyclerView!=null)
+            recyclerView.invalidate();
     }
 }

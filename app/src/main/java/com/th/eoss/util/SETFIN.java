@@ -3,10 +3,13 @@ package com.th.eoss.util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,19 +19,23 @@ import java.util.TreeMap;
 
 public class SETFIN {
 
+    public static final DateFormat xdFateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
     public static final List<String> cache_symbols = new ArrayList<>();
     public static final Map<String, SETFIN> cache = new TreeMap<>();
 
-    public static final String [][] HEADERS = {
-            {"Symbols", "Net Growth %", "E/A Growth %", "P/E", "Last", "Predict MA", "Predict Chg %"},
-            /*{"Symbols", "P/E", "Last", "Predict MA", "Predict Chg %"},*/
-            /*{"Symbols", "Predict MA", "Predict Chg %"},*/
-    };
-
     public static final String [] MEAN_HEADERS = {
-            "Net Growth %", "E/A Growth %",
-            "P/E", "Last",
-            "Predict MA", "Predict Chg %"
+            "Net Growth %",
+            "Margin Growth %",
+            "E/A Growth %",
+            "ROE",
+            "ROA",
+            "P/E",
+            "P/BV",
+            "EPS Growth %",
+            "DVD Growth %",
+            "DVD %",
+            "Predict %"
     };
 
     public static final List<String> LOW_IS_BETTER = new ArrayList<>();
@@ -37,11 +44,18 @@ public class SETFIN {
 
     static {
         LOW_IS_BETTER.addAll(Arrays.asList(new String[] {
-                "P/E", "Last",
+                "P/E",
+                "P/BV"
         }));
         HIGH_IS_BETTER.addAll(Arrays.asList(new String[]  {
-                "Net Growth %", "E/A Growth %",
-                "Predict MA", "Predict Chg %"
+                "Net Growth %",
+                "Margin Growth %",
+                "E/A Growth %",
+                "ROE",
+                "ROA",
+                "EPS Growth %",
+                "DVD Growth %",
+                "DVD %"
         }));
     }
 
@@ -97,7 +111,13 @@ public class SETFIN {
         dvd = tokens[24];
         xd = tokens[25];
         values.put("Predict MA", Float(tokens[26]));
-        values.put("Predict Chg %", Float(tokens[27]));
+        values.put("Predict %", Float(tokens[27]));
+
+        try {
+            values.put("XD", xdFateFormat.parse(xd).getTime());
+        } catch (Exception e) {
+            values.put("XD", Long.MAX_VALUE);
+        }
 
         float asset=values.get("Estimated Asset").floatValue()==0?1:values.get("Estimated Asset").floatValue();
 

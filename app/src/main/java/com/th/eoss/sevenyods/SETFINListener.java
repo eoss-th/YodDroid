@@ -7,5 +7,6 @@ import com.th.eoss.util.SETFIN;
  */
 
 interface SETFINListener {
-    public void onClicked(SETFIN setfin);
+    void onClicked(SETFIN setfin);
+    void onLongClicked(SETFIN setfin);
 }

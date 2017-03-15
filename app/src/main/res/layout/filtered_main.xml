@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="100dp"
+    android:paddingTop="105dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.th.eoss.sevenyods.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -21,22 +21,26 @@
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/symbolToggle"
             android:textOff="Symbol"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="Net"/>
+            android:id="@+id/netGrowthToggle"
+            android:textOff="Net^"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="Equity"/>
+            android:id="@+id/marginGrowthToggle"
+            android:textOff="Mar^"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="P/E"/>
+            android:id="@+id/equityGrowthToggle"
+            android:textOff="Equity^"/>
 
     </LinearLayout>
 
@@ -52,22 +56,61 @@
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/roeToggle"
             android:textOff="ROE"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/roaToggle"
             android:textOff="ROA"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="Predict"/>
+            android:id="@+id/peToggle"
+            android:textOff="P/E"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="Predict %"/>
+            android:id="@+id/pbvToggle"
+            android:textOff="P/BV"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toggles2"
+        android:id="@+id/toggles3"
+        >
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/epsGrowthToggle"
+            android:textOff="EPS^"/>
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dvdGrowthToggle"
+            android:textOff="DVD^"/>
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dvdPercentToggle"
+            android:textOff="DVD%"/>
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/xdToggle"
+            android:textOff="XD"/>
 
     </LinearLayout>
 
@@ -75,7 +118,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toggles2"
+        android:layout_below="@id/toggles3"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
