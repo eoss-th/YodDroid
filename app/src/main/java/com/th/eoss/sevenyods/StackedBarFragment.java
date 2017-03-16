@@ -26,11 +26,15 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
     protected List<String> symbols = new ArrayList<>();
     private Map<String, SETFIN> map = new TreeMap<>();
 
-    protected FilterSortManager filterSortManager = new FilterSortManager();
+    protected FilterSortManager filterSortManager;
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
 
     protected DisplayMetrics displayMetrics = new DisplayMetrics();
+
+    public StackedBarFragment() {
+        filterSortManager = FilterSortManager.instance(getClass().getName());
+    }
 
     @Override
     public void onAttach(Context context) {

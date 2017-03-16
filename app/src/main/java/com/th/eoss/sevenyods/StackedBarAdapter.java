@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +30,8 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
-        TextView symbol, last, pe;
+        TextView symbol, last, pe, confidence;
+        ImageView trend;
 
         StackedBarViewHolder (View view) {
             super(view);
@@ -43,6 +45,10 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             symbol = (TextView) view.findViewById(R.id.symbol);
             last = (TextView) view.findViewById(R.id.last);
             pe = (TextView) view.findViewById(R.id.pe);
+            confidence = (TextView) view.findViewById(R.id.confidence);
+
+            trend = (ImageView) view.findViewById(R.id.trend);
+
         }
 
     }
@@ -67,54 +73,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
             if (set!=null) {
 
-                holder.asset.setBackgroundColor(Color.WHITE);
-                holder.asset.getLayoutParams().width = stackedWidth;
-
-                float eaGrowthPercent = set.getFloatValue("E/A Growth %");
-
-                int gaColor;
-                if (eaGrowthPercent > 0) {
-                    gaColor = Color.parseColor("#dee8eb");
-                } else {
-                    gaColor = Color.parseColor("#7ea4b3");
-                }
-
-                holder.equityGrowth.setBackgroundColor(gaColor);
-                float equityGrowthWidth = set.getFloatValue("G/A") * holder.asset.getLayoutParams().width;
-                holder.equityGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) equityGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                holder.equity.setBackgroundColor(Color.WHITE);
-                float equityWidth = set.getFloatValue("E/G") * equityGrowthWidth;
-                holder.equity.setLayoutParams(new LinearLayout.LayoutParams((int) equityWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                float netGrowthPercent = set.getFloatValue("Net Growth %");
-
-                int ngColor;
-                if (netGrowthPercent > 0) {
-                    ngColor = Color.parseColor("#b4ecb4");
-                } else {
-                    ngColor = Color.parseColor("#ffb2ae");
-                }
-
-                holder.netGrowth.setBackgroundColor(ngColor);
-                float netGrowthWidth = Math.abs(set.getFloatValue("NG/E") * equityWidth);
-                holder.netGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) netGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                float estimatedNet = set.getFloatValue("Estimated Net");
-                int netColor;
-                if (estimatedNet > 0) {
-                    netColor = Color.WHITE;
-                } else {
-                    netColor = Color.parseColor("#ff6961");
-                }
-
-                holder.net.setBackgroundColor(netColor);
-                float netWidth = Math.abs(set.getFloatValue("N/NG") * netGrowthWidth);
-                holder.net.setLayoutParams(new LinearLayout.LayoutParams((int) netWidth, LinearLayout.LayoutParams.MATCH_PARENT));
-
-                holder.symbol.setText(symbol);
-                holder.last.setText("" + set.getFloatValue("Last"));
-                holder.pe.setText("" + set.getFloatValue("P/E"));
+                onBindStackedBarViewHolder(set, holder);
 
                 holder.asset.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -139,6 +98,127 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     @Override
     public int getItemCount() {
         return symbols.size();
+    }
+
+    protected void onBindStackedBarViewHolder (SETFIN set, StackedBarViewHolder holder) {
+
+        holder.asset.setBackgroundColor(Color.WHITE);
+        holder.asset.getLayoutParams().width = stackedWidth;
+
+        float eaGrowthPercent = set.getFloatValue("E/A Growth %");
+
+        int gaColor;
+        if (eaGrowthPercent > 0) {
+            gaColor = Color.parseColor("#dee8eb");
+        } else {
+            gaColor = Color.parseColor("#7ea4b3");
+        }
+
+        holder.equityGrowth.setBackgroundColor(gaColor);
+        float equityGrowthWidth = set.getFloatValue("G/A") * holder.asset.getLayoutParams().width;
+        holder.equityGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) equityGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        holder.equity.setBackgroundColor(Color.WHITE);
+        float equityWidth = set.getFloatValue("E/G") * equityGrowthWidth;
+        holder.equity.setLayoutParams(new LinearLayout.LayoutParams((int) equityWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        float netGrowthPercent = set.getFloatValue("Net Growth %");
+
+        int ngColor;
+        if (netGrowthPercent > 0) {
+            ngColor = Color.parseColor("#b4ecb4");
+        } else {
+            ngColor = Color.parseColor("#ffb2ae");
+        }
+
+        holder.netGrowth.setBackgroundColor(ngColor);
+        float netGrowthWidth = Math.abs(set.getFloatValue("NG/E") * equityWidth);
+        holder.netGrowth.setLayoutParams(new LinearLayout.LayoutParams((int) netGrowthWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        float estimatedNet = set.getFloatValue("Estimated Net");
+        int netColor;
+        if (estimatedNet > 0) {
+            netColor = Color.WHITE;
+        } else {
+            netColor = Color.parseColor("#ff6961");
+        }
+
+        holder.net.setBackgroundColor(netColor);
+        float netWidth = Math.abs(set.getFloatValue("N/NG") * netGrowthWidth);
+        holder.net.setLayoutParams(new LinearLayout.LayoutParams((int) netWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        holder.symbol.setText(set.symbol);
+        holder.last.setText("" + set.getFloatValue("Last"));
+        holder.pe.setText("" + set.getFloatValue("P/E"));
+        holder.confidence.setText("(" + set.getFloatValue("Predict %") + "%)");
+
+        float last = set.getFloatValue("Last");
+        float predictMA = set.getFloatValue("Predict MA");
+        float predictPercent = set.getFloatValue("Predict %");
+
+        holder.trend.setVisibility(View.VISIBLE);
+        holder.confidence.setVisibility(View.VISIBLE);
+
+        if (predictMA > last) {
+
+            if (predictPercent > 90) {
+
+                holder.trend.setImageResource(R.drawable.up91_100);
+
+            } else if (predictPercent > 80) {
+
+                holder.trend.setImageResource(R.drawable.up81_90);
+
+            } else if (predictPercent > 70) {
+
+                holder.trend.setImageResource(R.drawable.up71_80);
+
+            } else if (predictPercent > 60) {
+
+                holder.trend.setImageResource(R.drawable.up61_70);
+
+            } else if (predictPercent > 50) {
+
+                holder.trend.setImageResource(R.drawable.up51_60);
+
+            } else {
+                holder.trend.setImageResource(R.drawable.question);
+                holder.trend.setVisibility(View.INVISIBLE);
+                holder.confidence.setVisibility(View.INVISIBLE);
+            }
+
+        } else if (predictMA < last) {
+
+            if (predictPercent > 90) {
+
+                holder.trend.setImageResource(R.drawable.down91_100);
+
+            } else if (predictPercent > 80) {
+
+                holder.trend.setImageResource(R.drawable.down81_90);
+
+            } else if (predictPercent > 70) {
+
+                holder.trend.setImageResource(R.drawable.down71_80);
+
+            } else if (predictPercent > 60) {
+
+                holder.trend.setImageResource(R.drawable.down61_70);
+
+            } else if (predictPercent > 50) {
+
+                holder.trend.setImageResource(R.drawable.down51_60);
+
+            } else {
+                holder.trend.setImageResource(R.drawable.question);
+                holder.trend.setVisibility(View.INVISIBLE);
+                holder.confidence.setVisibility(View.INVISIBLE);
+            }
+
+        } else {
+            holder.trend.setVisibility(View.INVISIBLE);
+            holder.confidence.setVisibility(View.INVISIBLE);
+        }
     }
 
 }

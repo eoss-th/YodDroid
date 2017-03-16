@@ -38,7 +38,7 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.filtered_main, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        adapter = new StackedBarAdapter(symbols, this, getColumnWidth(1));
+        adapter = new FilteredStackedBarAdapter(symbols, this, getColumnWidth(1));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -74,8 +74,8 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
 
     @Override
     public void onResume() {
-        super.onResume();
         updateToggles();
+        super.onResume();
     }
 
     @Override

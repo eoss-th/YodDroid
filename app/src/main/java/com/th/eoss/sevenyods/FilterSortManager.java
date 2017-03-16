@@ -22,8 +22,27 @@ import java.util.TreeMap;
 
 public class FilterSortManager {
 
-    private Map<String, Filter> filterMap = new HashMap<>();
-    private Map<String, Boolean> sortMap = new HashMap<>();
+    private static Map<String, FilterSortManager> instanceMap = new HashMap<>();
+
+    private Map<String, Filter> filterMap;
+    private Map<String, Boolean> sortMap;
+
+    private FilterSortManager () {
+        filterMap = new HashMap<>();
+        sortMap = new HashMap<>();
+    }
+
+    public static FilterSortManager instance(String groupName) {
+
+        FilterSortManager manager = instanceMap.get(groupName);
+
+        if ( manager==null ) {
+            manager = new FilterSortManager();
+            instanceMap.put(groupName, manager);
+        }
+
+        return manager;
+    }
 
     public void toggleSort(String valueName) {
 
