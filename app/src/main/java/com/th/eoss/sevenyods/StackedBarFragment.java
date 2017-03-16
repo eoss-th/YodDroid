@@ -48,6 +48,7 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
 
         applySort();
         applyFilter();
+        reload();
     }
 
     public void load(List<String> list) {
@@ -104,23 +105,21 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
             symbols.addAll(resultSortedSymbol);
         }
 
-        reload();
     }
 
     protected final void applyFilter() {
-        Set<String> symbols = map.keySet();
-        this.symbols.clear();
-        for (String s:symbols) {
-            this.symbols.add(s);
-        }
+
+        List<String> resultFilteredSymbol = new ArrayList<>();
         SETFIN setfin;
         for ( String s:symbols ) {
             setfin = map.get(s);
-            if (!filterSortManager.isValid(setfin))
-                this.symbols.remove(s);
+            if (filterSortManager.isValid(setfin))
+                resultFilteredSymbol.add(s);
         }
 
-        reload();
+        symbols.clear();
+        symbols.addAll(resultFilteredSymbol);
+
     }
 
     private void popupFavoriteDialog(final SETFIN setfin) {
@@ -152,7 +151,7 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
         builder.show();
     }
 
-    private void reload() {
+    protected final void reload() {
 
         if (adapter!=null)
             adapter.notifyDataSetChanged();

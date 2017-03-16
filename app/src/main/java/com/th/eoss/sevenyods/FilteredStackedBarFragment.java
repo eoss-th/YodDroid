@@ -74,16 +74,17 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
 
     @Override
     public void onResume() {
-        updateToggles();
         super.onResume();
+        updateToggles();
     }
 
     @Override
     public void onClick(View view) {
 
         filterSortManager.toggleSort(toggleButtonMap.get(view));
-        updateToggles();
         applySort();
+        reload();
+        updateToggles();
 
     }
 
@@ -111,6 +112,7 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
             @Override
             public void onChange() {
                 applyFilter();
+                reload();
                 updateToggles();
             }
         });
