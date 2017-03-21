@@ -1,7 +1,6 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
-import com.th.eoss.util.SETIndex;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -79,11 +78,37 @@ public class MainActivity extends FragmentActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        /**
+         * Create Side Menu
+         */
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
            navigationView.setNavigationItemSelectedListener(this);
 
-        new SETIndexAsyncTask().execute(navigationView);
+        Menu menu = navigationView.getMenu();
 
+        Set<String> industries = SETFIN.map.keySet();
+        SubMenu subMenu;
+        Set<String> sections;
+        List<String> symbols;
+        int itemId = Menu.FIRST + 2;
+        int group = 0;
+        int seq = 0;
+        for (String industry:industries) {
+            subMenu = menu.addSubMenu(industry);
+            sections = SETFIN.map.get(industry).keySet();
+            for (String section:sections) {
+                subMenu.add(group, itemId, seq, section);
+                symbols = SETFIN.map.get(industry).get(section);
+                SETFIN.DICT.put(itemId, symbols);
+                itemId ++;
+                seq ++;
+            }
+            group ++;
+        }
+
+        /**
+         * Create Search
+         */
         SearchView searchView = (SearchView) navigationView.getHeaderView(0).findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -125,6 +150,9 @@ public class MainActivity extends FragmentActivity
             }
         });
 
+        /**
+         * Display Home
+         */
         pager.setCurrentItem(1);
 
     }
@@ -187,7 +215,7 @@ public class MainActivity extends FragmentActivity
             symbols = SETFIN.cache_symbols;
 
         } else {
-            symbols = SETIndex.DICT.get(id);
+            symbols = SETFIN.DICT.get(id);
         }
 
         if (symbols!=null) {

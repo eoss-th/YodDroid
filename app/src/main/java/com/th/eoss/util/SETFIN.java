@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +22,13 @@ import java.util.TreeMap;
 public class SETFIN {
 
     public static final DateFormat xdFateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final NumberFormat numberFormat = new DecimalFormat("0.00");
 
     public static final List<String> cache_symbols = new ArrayList<>();
     public static final Map<String, SETFIN> cache = new TreeMap<>();
+
+    public static final Map<String, Map<String, List<String>>> map = new TreeMap<String, Map<String, List<String>>>();;
+    public static final Map<Integer, List<String>> DICT = new HashMap<>();
 
     public static final String [] MEAN_HEADERS = {
             "Net Growth %",
@@ -117,6 +123,12 @@ public class SETFIN {
             values.put("XD", xdFateFormat.parse(xd).getTime());
         } catch (Exception e) {
             values.put("XD", Long.MAX_VALUE);
+        }
+
+        try {
+            values.put("Predict % Chg", Math.round(((values.get("Predict MA").floatValue() / values.get("Last").floatValue() - 1) * 100.0) * 100.0) / 100.0 );
+        } catch (Exception e) {
+            values.put("Predict % Chg", 0);
         }
 
         float asset=values.get("Estimated Asset").floatValue()==0?1:values.get("Estimated Asset").floatValue();
@@ -217,6 +229,19 @@ public class SETFIN {
         }
 
 */
+        Map<String, List<String>> dict = map.get(industry);
+        if (dict==null) {
+            dict = new TreeMap<String, List<String>> ();
+            map.put(industry, dict);
+        }
+
+        List<String> list = dict.get(sector);
+        if (list==null) {
+            list = new ArrayList<String> ();
+            dict.put(sector, list);
+        }
+
+        list.add(symbol);
 
     }
 
@@ -230,7 +255,6 @@ public class SETFIN {
             URL url = new URL(csvURL);
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
-            String [] tokens;
             br.readLine();
 
             while ((line=br.readLine())!=null) {
@@ -241,6 +265,9 @@ public class SETFIN {
                 cache_symbols.add(set.symbol);
                 cache.put(set.symbol, set);
             }
+
+            br.close();
+
 
         } catch (Exception e) {
 
@@ -423,6 +450,14 @@ public class SETFIN {
     public float getFloatValue(String valueName) {
         try {
             return values.get(valueName).floatValue();
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getIntValue(String valueName) {
+        try {
+            return values.get(valueName).intValue();
         } catch (Exception e) {
         }
         return 0;

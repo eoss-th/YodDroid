@@ -73,67 +73,47 @@
                 android:id="@+id/symbol"
                 android:layout_below="@id/asset"
                 android:layout_alignParentLeft="true"
-                android:paddingLeft="5dp"
+                android:paddingLeft="2dp"
+                android:textStyle="bold"
                 />
 
             <TextView
-                android:text="0.0"
+                android:text="00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/last"
+                android:id="@+id/confidence"
                 android:layout_below="@id/asset"
                 android:layout_alignParentRight="true"
                 android:paddingRight="5dp"
                 />
 
             <TextView
-                android:text="Last : "
+                android:text="With confidence:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lastLabel"
+                android:id="@+id/confidenceLabel"
                 android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/last"
+                android:layout_toLeftOf="@id/confidence"
                 android:paddingRight="5dp"
                 />
 
             <TextView
-                android:text="0.0"
+                android:text="(00.00%)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/eps"
+                android:id="@+id/predictPercentChg"
                 android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/lastLabel"
+                android:layout_toLeftOf="@id/confidenceLabel"
                 android:paddingRight="5dp"
                 />
 
-            <TextView
-                android:text="EPS : "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/epsLabel"
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/trend"
                 android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/eps"
-                android:paddingRight="5dp"
-                />
-
-            <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/symbol"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                />
-
-            <TextView
-                android:text="P/E : "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/peLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/pe"
-                android:paddingRight="5dp"
+                android:layout_toLeftOf="@id/predictPercentChg"
+                android:layout_marginRight="5dp"
                 />
 
             <TextView
@@ -142,37 +122,78 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/pbv"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/peLabel"
+                android:layout_alignParentRight="true"
                 android:paddingRight="5dp"
+                android:textStyle="bold"
                 />
 
             <TextView
-                android:text="P/BV : "
+                android:text="P/BV:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pbvLabel"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/pbv"
-                android:paddingRight="5dp"
                 />
 
             <TextView
-                android:text="(00.00%)"
+                android:text="0.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/confidence"
+                android:id="@+id/pe"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/pbvLabel"
                 android:paddingRight="5dp"
+                android:textStyle="bold"
                 />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
+            <TextView
+                android:text="P/E:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/peLabel"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/confidence"
-                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/pe"
+                />
+
+            <TextView
+                android:text="0.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/eps"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/peLabel"
+                android:paddingRight="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:text="EPS:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/epsLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/eps"
+                />
+
+            <TextView
+                android:text="0.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/last"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/epsLabel"
+                android:paddingRight="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:text="Last:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lastLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/last"
                 />
 
         </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,8 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter());
         filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter());
         filterSortManager.put("Predict %", new Filter.HigherOrEqualThanFilter());
+
+        filterSortManager.toggleSort("Predict %");
 
     }
 

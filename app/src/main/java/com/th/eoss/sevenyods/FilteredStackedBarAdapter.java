@@ -17,11 +17,13 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
     class FilteredStackedBarHolder extends StackedBarViewHolder {
 
-        TextView pbv, eps;
+        TextView confidence, confidenceLabel, pbv, eps;
 
         FilteredStackedBarHolder(View view) {
             super(view);
 
+            confidence = (TextView) view.findViewById(R.id.confidence);
+            confidenceLabel = (TextView) view.findViewById(R.id.confidenceLabel);
             pbv = (TextView) view.findViewById(R.id.pbv);
             eps = (TextView) view.findViewById(R.id.eps);
         }
@@ -43,8 +45,25 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         FilteredStackedBarHolder holder = (FilteredStackedBarHolder) h;
 
+        int predictPecent = set.getIntValue("Predict %");
+        holder.confidence.setText("" + predictPecent);
+
+        if (predictPecent > 50) {
+
+            holder.confidenceLabel.setVisibility(View.VISIBLE);
+            holder.confidence.setVisibility(View.VISIBLE);
+
+        } else {
+
+            holder.confidenceLabel.setVisibility(View.INVISIBLE);
+            holder.confidence.setVisibility(View.INVISIBLE);
+
+        }
+
         holder.pbv.setText("" + set.getFloatValue("P/BV"));
         holder.eps.setText("" + set.getFloatValue("EPS"));
+
+
     }
 
 

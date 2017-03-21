@@ -30,7 +30,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
-        TextView symbol, last, pe, confidence;
+        TextView symbol, last, pe, predictPercentChg;
         ImageView trend;
 
         StackedBarViewHolder (View view) {
@@ -45,7 +45,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             symbol = (TextView) view.findViewById(R.id.symbol);
             last = (TextView) view.findViewById(R.id.last);
             pe = (TextView) view.findViewById(R.id.pe);
-            confidence = (TextView) view.findViewById(R.id.confidence);
+            predictPercentChg = (TextView) view.findViewById(R.id.predictPercentChg);
 
             trend = (ImageView) view.findViewById(R.id.trend);
 
@@ -150,14 +150,14 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
         holder.symbol.setText(set.symbol);
         holder.last.setText("" + set.getFloatValue("Last"));
         holder.pe.setText("" + set.getFloatValue("P/E"));
-        holder.confidence.setText("(" + set.getFloatValue("Predict %") + "%)");
+        holder.predictPercentChg.setText("(" + set.getFloatValue("Predict % Chg") + "%)");
 
         float last = set.getFloatValue("Last");
         float predictMA = set.getFloatValue("Predict MA");
         float predictPercent = set.getFloatValue("Predict %");
 
         holder.trend.setVisibility(View.VISIBLE);
-        holder.confidence.setVisibility(View.VISIBLE);
+        holder.predictPercentChg.setVisibility(View.VISIBLE);
 
         if (predictMA > last) {
 
@@ -184,7 +184,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             } else {
                 holder.trend.setImageResource(R.drawable.question);
                 holder.trend.setVisibility(View.INVISIBLE);
-                holder.confidence.setVisibility(View.INVISIBLE);
+                holder.predictPercentChg.setVisibility(View.INVISIBLE);
             }
 
         } else if (predictMA < last) {
@@ -212,12 +212,12 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             } else {
                 holder.trend.setImageResource(R.drawable.question);
                 holder.trend.setVisibility(View.INVISIBLE);
-                holder.confidence.setVisibility(View.INVISIBLE);
+                holder.predictPercentChg.setVisibility(View.INVISIBLE);
             }
 
         } else {
             holder.trend.setVisibility(View.INVISIBLE);
-            holder.confidence.setVisibility(View.INVISIBLE);
+            holder.predictPercentChg.setVisibility(View.INVISIBLE);
         }
     }
 

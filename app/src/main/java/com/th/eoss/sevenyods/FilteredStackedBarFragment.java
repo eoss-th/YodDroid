@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 import com.th.eoss.util.SETFIN;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -75,6 +76,12 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
     @Override
     public void onResume() {
         super.onResume();
+        updateToggles();
+    }
+
+    @Override
+    public void load(List<String> list) {
+        super.load(list);
         updateToggles();
     }
 

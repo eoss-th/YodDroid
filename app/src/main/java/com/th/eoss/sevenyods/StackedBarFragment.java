@@ -46,8 +46,8 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
     public void onResume() {
         super.onResume();
 
-        applySort();
         applyFilter();
+        applySort();
         reload();
     }
 
@@ -72,6 +72,8 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
             }
         }
 
+        applyFilter();
+        applySort();
         reload();
     }
 

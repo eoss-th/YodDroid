@@ -1,7 +1,6 @@
 package com.th.eoss.test;
 
 import com.th.eoss.util.LinearRegression;
-import com.th.eoss.util.SETIndex;
 import com.th.eoss.util.SETQuote;
 import com.th.eoss.util.SETSummary;
 import com.th.eoss.util.YahooHistory;
@@ -11,7 +10,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
 
-import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Map;
 
