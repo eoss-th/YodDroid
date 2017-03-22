@@ -90,6 +90,7 @@
                 android:text="Last : "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/lastLabel"
                 android:layout_below="@id/asset"
                 android:layout_toLeftOf="@id/last"
                 android:paddingRight="5dp"
@@ -109,6 +110,7 @@
                 android:text="P/E : "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/peLabel"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/pe"
                 android:paddingRight="5dp"
@@ -117,10 +119,10 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_below="@id/symbol"
                 android:id="@+id/trend"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/peLabel"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
                 />
 
             <TextView
@@ -128,9 +130,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/predictPercentChg"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/peLabel"
+                android:layout_toRightOf="@+id/trend"
                 android:layout_marginLeft="5dp"
-                android:layout_alignParentLeft="true"
                 />
 
         </RelativeLayout>

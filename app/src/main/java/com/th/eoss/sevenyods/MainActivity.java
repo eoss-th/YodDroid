@@ -46,7 +46,8 @@ public class MainActivity extends FragmentActivity
     private TabLayout tab;
 
     private Set<String> favouriteSymbols = new TreeSet<>();
-    private int group;
+    private int groupId;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,7 @@ public class MainActivity extends FragmentActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 String [] searchSymbols = query.trim().split(" ");
 
                 List<String> symbols = new ArrayList<String>();
@@ -128,9 +130,9 @@ public class MainActivity extends FragmentActivity
                     }
                 }
 
-                if (!symbols.isEmpty()) {
-                    filteredStackedBarFragment.load(symbols);
-                }
+                filteredStackedBarFragment.load(symbols);
+
+                toolbar.setTitle("");
 
                 drawer.closeDrawer(GravityCompat.START);
                 pager.setCurrentItem(0);
@@ -141,9 +143,9 @@ public class MainActivity extends FragmentActivity
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.isEmpty()) {
-                    new SETFINAsyncTask().execute();
-                    drawer.closeDrawers();
+                if (newText.trim().isEmpty()) {
+                    //Return to last group
+                    loadGroup(groupId, title);
                 }
 
                 return false;
@@ -201,10 +203,13 @@ public class MainActivity extends FragmentActivity
 
         loadGroup(id, title);
 
+        drawer.closeDrawer(GravityCompat.START);
+        pager.setCurrentItem(0);
+
         return true;
     }
 
-    private void loadGroup(int id, String title) {
+    void loadGroup(int id, String title) {
 
         List<String> symbols;
 
@@ -224,10 +229,8 @@ public class MainActivity extends FragmentActivity
 
         toolbar.setTitle(title);
 
-        drawer.closeDrawer(GravityCompat.START);
-        pager.setCurrentItem(0);
-
-        group = id;
+        this.groupId = id;
+        this.title = title;
     }
 
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
@@ -307,8 +310,8 @@ public class MainActivity extends FragmentActivity
     public void removeFromFavourite (String symbol) {
         favouriteSymbols.remove(symbol);
         updateFavourite();
-        if (group==0) {
-            loadGroup(group, toolbar.getTitle().toString());
+        if (groupId==0) {
+            loadGroup(groupId, toolbar.getTitle().toString());
         }
     }
 

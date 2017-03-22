@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -17,15 +19,14 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
     class FilteredStackedBarHolder extends StackedBarViewHolder {
 
-        TextView confidence, confidenceLabel, pbv, eps;
+        TextView score, scoreLabel, predictLabel;
 
         FilteredStackedBarHolder(View view) {
             super(view);
 
-            confidence = (TextView) view.findViewById(R.id.confidence);
-            confidenceLabel = (TextView) view.findViewById(R.id.confidenceLabel);
-            pbv = (TextView) view.findViewById(R.id.pbv);
-            eps = (TextView) view.findViewById(R.id.eps);
+            score = (TextView) view.findViewById(R.id.score);
+            scoreLabel = (TextView) view.findViewById(R.id.scoreLabel);
+            predictLabel = (TextView) view.findViewById(R.id.predictLabel);
         }
 
 
@@ -45,24 +46,34 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         FilteredStackedBarHolder holder = (FilteredStackedBarHolder) h;
 
-        int predictPecent = set.getIntValue("Predict %");
-        holder.confidence.setText("" + predictPecent);
+        float predictPercentChg = set.getFloatValue("Predict % Chg");
 
-        if (predictPecent > 50) {
+        if (predictPercentChg > 0) {
 
-            holder.confidenceLabel.setVisibility(View.VISIBLE);
-            holder.confidence.setVisibility(View.VISIBLE);
+            holder.predictPercentChg.setText("+" + set.getFloatValue("Predict % Chg") + "%");
 
         } else {
 
-            holder.confidenceLabel.setVisibility(View.INVISIBLE);
-            holder.confidence.setVisibility(View.INVISIBLE);
+            holder.predictPercentChg.setText(set.getFloatValue("Predict % Chg") + "%");
 
         }
 
-        holder.pbv.setText("" + set.getFloatValue("P/BV"));
-        holder.eps.setText("" + set.getFloatValue("EPS"));
+        int predictPercent = set.getIntValue("Predict %");
+        holder.score.setText("" + predictPercent);
 
+        if (predictPercent > 50) {
+
+            holder.scoreLabel.setVisibility(View.VISIBLE);
+            holder.predictLabel.setVisibility(View.VISIBLE);
+            holder.score.setVisibility(View.VISIBLE);
+
+        } else {
+
+            holder.scoreLabel.setVisibility(View.INVISIBLE);
+            holder.predictLabel.setVisibility(View.INVISIBLE);
+            holder.score.setVisibility(View.INVISIBLE);
+
+        }
 
     }
 

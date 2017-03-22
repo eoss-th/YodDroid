@@ -77,63 +77,54 @@
                 android:textStyle="bold"
                 />
 
-            <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/confidence"
-                android:layout_below="@id/asset"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                />
-
-            <TextView
-                android:text="With confidence:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/confidenceLabel"
-                android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/confidence"
-                android:paddingRight="5dp"
-                />
-
-            <TextView
-                android:text="(00.00%)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictPercentChg"
-                android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/confidenceLabel"
-                android:paddingRight="5dp"
-                />
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/trend"
-                android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/predictPercentChg"
-                android:layout_marginRight="5dp"
+                android:layout_below="@id/symbol"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
                 />
 
             <TextView
-                android:text="0.0"
+                android:text="Predict:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pbv"
+                android:id="@+id/predictLabel"
                 android:layout_below="@id/symbol"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
+                android:layout_toRightOf="@id/trend"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="00.00%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/predictPercentChg"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/predictLabel"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="Score:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/predictPercentChg"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/scoreLabel"
+                android:paddingLeft="4dp"
                 android:textStyle="bold"
-                />
-
-            <TextView
-                android:text="P/BV:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pbvLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/pbv"
                 />
 
             <TextView
@@ -142,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/pe"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/pbvLabel"
-                android:paddingRight="5dp"
+                android:layout_alignParentRight="true"
+                android:paddingRight="2dp"
                 android:textStyle="bold"
                 />
 
@@ -154,26 +145,7 @@
                 android:id="@+id/peLabel"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/pe"
-                />
-
-            <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/eps"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/peLabel"
-                android:paddingRight="5dp"
-                android:textStyle="bold"
-                />
-
-            <TextView
-                android:text="EPS:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/epsLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/eps"
+                android:paddingRight="4dp"
                 />
 
             <TextView
@@ -182,8 +154,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/last"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/epsLabel"
-                android:paddingRight="5dp"
+                android:layout_toLeftOf="@id/peLabel"
+                android:paddingRight="4dp"
                 android:textStyle="bold"
                 />
 
@@ -194,8 +166,8 @@
                 android:id="@+id/lastLabel"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/last"
+                android:paddingRight="4dp"
                 />
-
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

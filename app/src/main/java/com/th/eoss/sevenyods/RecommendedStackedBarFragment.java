@@ -30,7 +30,7 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter());
         filterSortManager.put("Predict %", new Filter.HigherOrEqualThanFilter());
 
-        filterSortManager.toggleSort("Predict %");
+        filterSortManager.toggleSort("Predict % Chg");
 
     }
 

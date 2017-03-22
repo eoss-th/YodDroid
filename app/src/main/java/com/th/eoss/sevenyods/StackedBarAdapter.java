@@ -150,11 +150,24 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
         holder.symbol.setText(set.symbol);
         holder.last.setText("" + set.getFloatValue("Last"));
         holder.pe.setText("" + set.getFloatValue("P/E"));
-        holder.predictPercentChg.setText("(" + set.getFloatValue("Predict % Chg") + "%)");
+
+        float predictPercentChg = set.getFloatValue("Predict % Chg");
+
+        if (predictPercentChg > 0) {
+
+            holder.predictPercentChg.setText("+" + set.getFloatValue("Predict % Chg") + "%");
+            holder.predictPercentChg.setTextColor(Color.parseColor("#006400"));
+
+        } else {
+
+            holder.predictPercentChg.setText(set.getFloatValue("Predict % Chg") + "%");
+            holder.predictPercentChg.setTextColor(Color.RED);
+
+        }
 
         float last = set.getFloatValue("Last");
         float predictMA = set.getFloatValue("Predict MA");
-        float predictPercent = set.getFloatValue("Predict %");
+        int predictPercent = set.getIntValue("Predict %");
 
         holder.trend.setVisibility(View.VISIBLE);
         holder.predictPercentChg.setVisibility(View.VISIBLE);
@@ -167,22 +180,22 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
             } else if (predictPercent > 80) {
 
-                holder.trend.setImageResource(R.drawable.up81_90);
+                holder.trend.setImageResource(R.drawable.up91_100);
 
             } else if (predictPercent > 70) {
 
-                holder.trend.setImageResource(R.drawable.up71_80);
+                holder.trend.setImageResource(R.drawable.up91_100);
 
             } else if (predictPercent > 60) {
 
-                holder.trend.setImageResource(R.drawable.up61_70);
+                holder.trend.setImageResource(R.drawable.up81_90);
 
             } else if (predictPercent > 50) {
 
-                holder.trend.setImageResource(R.drawable.up51_60);
+                holder.trend.setImageResource(R.drawable.up71_80);
 
             } else {
-                holder.trend.setImageResource(R.drawable.question);
+                holder.trend.setImageResource(R.drawable.up51_60);
                 holder.trend.setVisibility(View.INVISIBLE);
                 holder.predictPercentChg.setVisibility(View.INVISIBLE);
             }
@@ -195,22 +208,22 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
             } else if (predictPercent > 80) {
 
-                holder.trend.setImageResource(R.drawable.down81_90);
+                holder.trend.setImageResource(R.drawable.down91_100);
 
             } else if (predictPercent > 70) {
 
-                holder.trend.setImageResource(R.drawable.down71_80);
+                holder.trend.setImageResource(R.drawable.down91_100);
 
             } else if (predictPercent > 60) {
 
-                holder.trend.setImageResource(R.drawable.down61_70);
+                holder.trend.setImageResource(R.drawable.down81_90);
 
             } else if (predictPercent > 50) {
 
-                holder.trend.setImageResource(R.drawable.down51_60);
+                holder.trend.setImageResource(R.drawable.down71_80);
 
             } else {
-                holder.trend.setImageResource(R.drawable.question);
+                holder.trend.setImageResource(R.drawable.down51_60);
                 holder.trend.setVisibility(View.INVISIBLE);
                 holder.predictPercentChg.setVisibility(View.INVISIBLE);
             }
