@@ -77,56 +77,6 @@
                 android:textStyle="bold"
                 />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/symbol"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="2dp"
-                />
-
-            <TextView
-                android:text="Predict:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/trend"
-                android:paddingLeft="4dp"
-                />
-
-            <TextView
-                android:text="00.00%"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictPercentChg"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/predictLabel"
-                android:paddingLeft="4dp"
-                />
-
-            <TextView
-                android:text="Score:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/scoreLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/predictPercentChg"
-                android:paddingLeft="4dp"
-                />
-
-            <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/score"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/scoreLabel"
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                />
-
             <TextView
                 android:text="0.0"
                 android:layout_width="wrap_content"
@@ -167,6 +117,67 @@
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/last"
                 android:paddingRight="4dp"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/trend"
+                android:layout_below="@id/lastLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
+                />
+
+            <TextView
+                android:text="Predict:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/predictLabel"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/trend"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="00.00%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/predictPercentChg"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/predictLabel"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="Score:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreLabel"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/predictPercentChg"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/scoreLabel"
+                android:paddingLeft="4dp"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/star"
+                android:src="@android:drawable/btn_star_big_off"
+                android:layout_below="@id/lastLabel"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 />
         </RelativeLayout>
 

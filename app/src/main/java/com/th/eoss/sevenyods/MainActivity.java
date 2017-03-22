@@ -252,7 +252,11 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private List<String> loadFromFavorite() {
+    Set<String> favouriteSymbols() {
+        return favouriteSymbols;
+    }
+
+    List<String> loadFromFavorite() {
         String filename = "favorites";
         File file = new File(getApplicationContext().getFilesDir(), filename);
         BufferedReader br = null;
@@ -305,12 +309,21 @@ public class MainActivity extends FragmentActivity
     public void addToFavourite (String symbol) {
         favouriteSymbols.add(symbol);
         updateFavourite();
+        filteredStackedBarFragment.reload();
+        recommendedStackedBarFragment.reload();
+
+        if (groupId==R.id.fav) {
+            loadGroup(groupId, toolbar.getTitle().toString());
+        }
     }
 
     public void removeFromFavourite (String symbol) {
         favouriteSymbols.remove(symbol);
         updateFavourite();
-        if (groupId==0) {
+        filteredStackedBarFragment.reload();
+        recommendedStackedBarFragment.reload();
+
+        if (groupId==R.id.fav) {
             loadGroup(groupId, toolbar.getTitle().toString());
         }
     }

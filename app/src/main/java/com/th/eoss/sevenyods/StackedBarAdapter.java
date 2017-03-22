@@ -1,8 +1,8 @@
 package com.th.eoss.sevenyods;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +12,7 @@ import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wisarutsrisawet on 3/12/17.
@@ -23,15 +20,14 @@ import java.util.Map;
 
 public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.StackedBarViewHolder> {
 
-    private final List<String> symbols;
-    private SETFINListener listener;
-    private int stackedWidth;
+    protected YODContext yodContext;
+    protected int stackedWidth;
 
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
         TextView symbol, last, pe, predictPercentChg;
-        ImageView trend;
+        ImageView trend, star;
 
         StackedBarViewHolder (View view) {
             super(view);
@@ -48,15 +44,14 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             predictPercentChg = (TextView) view.findViewById(R.id.predictPercentChg);
 
             trend = (ImageView) view.findViewById(R.id.trend);
-
+            star = (ImageView) view.findViewById(R.id.star);
         }
 
     }
 
-    public StackedBarAdapter(List<String> symbols, SETFINListener listener, int stackedWidth) {
-        this.symbols = symbols;
-        this.listener = listener;
-        this.stackedWidth = stackedWidth;
+    public StackedBarAdapter(YODContext yodContext) {
+        this.yodContext = yodContext;
+        this.stackedWidth = yodContext.getColumnWidth(2);
     }
 
     @Override
@@ -65,10 +60,10 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     }
 
     @Override
-    public void onBindViewHolder(StackedBarViewHolder holder, int position) {
-        if ( position<symbols.size() ) {
+    public void onBindViewHolder(final StackedBarViewHolder holder, int position) {
+        if ( position<yodContext.symbols().size() ) {
 
-            String symbol = symbols.get(position);
+            String symbol = yodContext.symbols().get(position);
             final SETFIN set = SETFIN.cache.get(symbol);
 
             if (set!=null) {
@@ -78,17 +73,32 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
                 holder.asset.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (listener!=null)
-                            listener.onClicked(set);
+                        yodContext.onClicked(set);
                     }
                 });
+
 
                 holder.asset.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        if (listener!=null)
-                            listener.onLongClicked(set);
+                        yodContext.onLongClicked(set);
                         return false;
+                    }
+                });
+
+                holder.star.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (yodContext.mainActivity().favouriteSymbols().contains(set.symbol)) {
+
+                            yodContext.mainActivity().removeFromFavourite(set.symbol);
+
+                        } else {
+
+                            yodContext.mainActivity().addToFavourite(set.symbol);
+
+                        }
+
                     }
                 });
             }
@@ -97,7 +107,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
     @Override
     public int getItemCount() {
-        return symbols.size();
+        return yodContext.symbols().size();
     }
 
     protected void onBindStackedBarViewHolder (SETFIN set, StackedBarViewHolder holder) {
@@ -231,6 +241,12 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
         } else {
             holder.trend.setVisibility(View.INVISIBLE);
             holder.predictPercentChg.setVisibility(View.INVISIBLE);
+        }
+
+        if (yodContext.mainActivity().favouriteSymbols().contains(set.symbol)) {
+            holder.star.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            holder.star.setImageResource(android.R.drawable.btn_star_big_off);
         }
     }
 

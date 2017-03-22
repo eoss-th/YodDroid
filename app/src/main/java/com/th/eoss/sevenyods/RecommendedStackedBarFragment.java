@@ -40,7 +40,7 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.recommended_main, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        adapter = new StackedBarAdapter(symbols, this, getColumnWidth(2));
+        adapter = new StackedBarAdapter(this);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);

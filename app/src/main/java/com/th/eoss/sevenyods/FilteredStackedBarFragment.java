@@ -39,7 +39,7 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.filtered_main, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        adapter = new FilteredStackedBarAdapter(symbols, this, getColumnWidth(1));
+        adapter = new FilteredStackedBarAdapter(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

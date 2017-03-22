@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
@@ -29,11 +27,11 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
             predictLabel = (TextView) view.findViewById(R.id.predictLabel);
         }
 
-
     }
 
-    public FilteredStackedBarAdapter(List<String> symbols, SETFINListener listener, int stackedWidth) {
-        super(symbols, listener, stackedWidth);
+    public FilteredStackedBarAdapter(YODContext yodContext) {
+        super(yodContext);
+        this.stackedWidth = yodContext.getColumnWidth(1);
     }
 
     @Override

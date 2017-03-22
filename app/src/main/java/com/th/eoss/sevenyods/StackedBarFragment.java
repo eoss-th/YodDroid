@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * Created by wisarut on 30/9/2559.
  */
 
-public abstract class StackedBarFragment extends Fragment implements SETFINListener {
+public abstract class StackedBarFragment extends Fragment implements YODContext {
 
     protected List<String> symbols = new ArrayList<>();
     private Map<String, SETFIN> map = new TreeMap<>();
@@ -40,6 +40,7 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
     public void onAttach(Context context) {
         super.onAttach(context);
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((MainActivity)getActivity()).loadFromFavorite();
     }
 
     @Override
@@ -87,8 +88,19 @@ public abstract class StackedBarFragment extends Fragment implements SETFINListe
         popupFavoriteDialog(setfin);
     }
 
-    protected int getColumnWidth(int numColumns) {
+    @Override
+    public List<String> symbols() {
+        return symbols;
+    }
+
+    @Override
+    public int getColumnWidth(int numColumns) {
         return (int) ((displayMetrics.widthPixels / numColumns) * 0.8);
+    }
+
+    @Override
+    public MainActivity mainActivity() {
+        return ((MainActivity) getActivity());
     }
 
     protected final void applySort() {
