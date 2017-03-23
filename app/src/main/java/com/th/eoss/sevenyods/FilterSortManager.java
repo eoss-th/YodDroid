@@ -64,9 +64,17 @@ public class FilterSortManager {
     public boolean isValid (SETFIN set) {
         Filter filter;
         Set<String> valueNames = filterMap.keySet();
+
+        float conditionValue;
         for (String valueName:valueNames) {
             filter = filterMap.get(valueName);
-            if (!filter.isValid(set.getFloatValue(valueName), Mean.mean(valueName).value())) {
+
+            if (valueName.equals("Predict %"))
+                conditionValue = 52;
+            else
+                conditionValue = Mean.mean(valueName).value();
+
+            if (!filter.isValid(set.getFloatValue(valueName), conditionValue)) {
                 return false;
             }
         }
