@@ -25,18 +25,6 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
 
-        Map<String, Map<String, List<String>>> map = new SETIndex().map();
-
-        for (String i:map.keySet()) {
-            Map<String, List<String>> dict = map.get(i);
-
-            for (String s:dict.keySet()) {
-                List<String> list = dict.get(s);
-                for (String symbol:list) {
-                    System.out.println(new SETSummary(symbol));
-                }
-            }
-        }
 
     }
 
@@ -50,18 +38,6 @@ public class ExampleUnitTest {
 
     @Test
     public void quote_isCorrect() throws Exception {
-        Map<String, Map<String, List<String>>> map = new SETIndex().map();
-
-        for (String i:map.keySet()) {
-            Map<String, List<String>> dict = map.get(i);
-
-            for (String s:dict.keySet()) {
-                List<String> list = dict.get(s);
-                for (String symbol:list) {
-                    System.out.println(new SETQuote(symbol));
-                }
-            }
-        }
 
     }
 

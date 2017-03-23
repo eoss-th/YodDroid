@@ -59,19 +59,11 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
         int predictPercent = set.getIntValue("Predict %");
         holder.score.setText("" + predictPercent);
 
-        if (predictPercent > 50) {
-
-            holder.scoreLabel.setVisibility(View.VISIBLE);
-            holder.predictLabel.setVisibility(View.VISIBLE);
-            holder.score.setVisibility(View.VISIBLE);
-
-        } else {
-
-            holder.scoreLabel.setVisibility(View.INVISIBLE);
-            holder.predictLabel.setVisibility(View.INVISIBLE);
-            holder.score.setVisibility(View.INVISIBLE);
-
-        }
+        holder.trend.setVisibility(View.VISIBLE);
+        holder.predictLabel.setVisibility(View.VISIBLE);
+        holder.predictPercentChg.setVisibility(View.VISIBLE);
+        holder.scoreLabel.setVisibility(View.VISIBLE);
+        holder.score.setVisibility(View.VISIBLE);
 
     }
 

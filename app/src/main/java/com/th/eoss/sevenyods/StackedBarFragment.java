@@ -3,6 +3,8 @@ package com.th.eoss.sevenyods;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -172,5 +174,28 @@ public abstract class StackedBarFragment extends Fragment implements YODContext 
 
         if (recyclerView!=null)
             recyclerView.invalidate();
+    }
+
+    protected final void launchSeto(String symbol) {
+        String packageName = "com.th.eoss.setoperator";
+        Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            // Bring user to the market or let them choose an app?
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=" + packageName));
+        } else {
+            intent.putExtra("symbol", symbol);
+        }
+
+        try {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(intent);
+        } catch (android.content.ActivityNotFoundException anfe) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+            if (null != intent.resolveActivity(getContext().getPackageManager())) {
+                getContext().startActivity(intent);
+            }
+        }
+
     }
 }

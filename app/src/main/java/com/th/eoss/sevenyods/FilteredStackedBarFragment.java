@@ -45,22 +45,13 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.symbolToggle), "Symbols");
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.netGrowthToggle), "Net Growth %");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.marginGrowthToggle), "Margin Growth %");
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.equityGrowthToggle), "E/A Growth %");
-
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.roeToggle), "ROE");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.roaToggle), "ROA");
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.peToggle), "P/E");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.pbvToggle), "P/BV");
+        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.predictPercentChgToggle), "Predict % Chg");
+        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.scoreToggle), "Predict %");
 
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.epsGrowthToggle), "EPS Growth %");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.dvdGrowthToggle), "DVD Growth %");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.dvdPercentToggle), "DVD %");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.xdToggle), "XD");
-
-        int buttonWidth = displayMetrics.widthPixels / 4;
+        int buttonWidth = displayMetrics.widthPixels / 5;
         Set<ToggleButton> toggleButtons = toggleButtonMap.keySet();
         for (ToggleButton toggleButton:toggleButtons) {
             toggleButton.setText(toggleButton.getTextOff());
@@ -118,9 +109,12 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
         Dialog dialog = filterSortManager.buildFilterDialog(getActivity(), valueName, valueTitle, new FilterSortManager.FilterToggleButtonManagerListener() {
             @Override
             public void onChange() {
+
+                mainActivity().reloadLastGroup();
                 applyFilter();
                 reload();
                 updateToggles();
+
             }
         });
         dialog.show();

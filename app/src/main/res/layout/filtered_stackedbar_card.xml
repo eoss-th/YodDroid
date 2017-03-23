@@ -74,6 +74,7 @@
                 android:layout_below="@id/asset"
                 android:layout_alignParentLeft="true"
                 android:paddingLeft="2dp"
+                android:layout_marginBottom="5dp"
                 android:textStyle="bold"
                 />
 
@@ -84,7 +85,7 @@
                 android:id="@+id/pe"
                 android:layout_below="@id/symbol"
                 android:layout_alignParentRight="true"
-                android:paddingRight="2dp"
+                android:paddingRight="5dp"
                 android:textStyle="bold"
                 />
 
@@ -119,33 +120,15 @@
                 android:paddingRight="4dp"
                 />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/lastLabel"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="2dp"
-                />
-
             <TextView
-                android:text="Predict:"
+                android:text="00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/predictLabel"
-                android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/trend"
-                android:paddingLeft="4dp"
-                />
-
-            <TextView
-                android:text="00.00%"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictPercentChg"
-                android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/predictLabel"
-                android:paddingLeft="4dp"
+                android:id="@+id/score"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/lastLabel"
+                android:paddingRight="4dp"
+                android:textStyle="bold"
                 />
 
             <TextView
@@ -153,20 +136,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/scoreLabel"
-                android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/predictPercentChg"
-                android:paddingLeft="4dp"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/score"
+                android:paddingRight="4dp"
                 />
 
             <TextView
-                android:text="00"
+                android:text="00.00%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/score"
-                android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/scoreLabel"
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
+                android:id="@+id/predictPercentChg"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/scoreLabel"
+                android:paddingRight="4dp"
+                />
+
+            <TextView
+                android:text="Predict:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/predictLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/predictPercentChg"
+                android:paddingRight="4dp"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/trend"
+                android:layout_below="@id/symbol"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
                 />
 
             <ImageView
@@ -177,6 +178,7 @@
                 android:layout_below="@id/lastLabel"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 />
         </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Yod">
+    <item android:title="Yod! Beta">
         <menu>
             <item android:title="Following" android:id="@+id/fav"/>
             <item android:title="All Sectors" android:id="@+id/all"/>

@@ -145,7 +145,7 @@ public class MainActivity extends FragmentActivity
 
                 if (newText.trim().isEmpty()) {
                     //Return to last group
-                    loadGroup(groupId, title);
+                    reloadLastGroup();
                 }
 
                 return false;
@@ -207,6 +207,10 @@ public class MainActivity extends FragmentActivity
         pager.setCurrentItem(0);
 
         return true;
+    }
+
+    void reloadLastGroup() {
+        loadGroup(groupId, title);
     }
 
     void loadGroup(int id, String title) {

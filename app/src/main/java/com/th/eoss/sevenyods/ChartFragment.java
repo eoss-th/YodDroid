@@ -63,33 +63,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.chart, container, false);
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String packageName = "com.th.eoss.setoperator";
-                Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-                if (intent == null) {
-                    // Bring user to the market or let them choose an app?
-                    intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + packageName));
-                } else {
-                    intent.putExtra("symbol", set.symbol);
-                }
-
-                try {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(intent);
-                } catch (android.content.ActivityNotFoundException anfe) {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
-                    if (null != intent.resolveActivity(getContext().getPackageManager())) {
-                        getContext().startActivity(intent);
-                    }
-                }
-            }
-        });
-
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -140,7 +113,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedChart.getXAxis().resetAxisMinimum();
         combinedChart.getXAxis().resetAxisMaximum();
 
-        BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "Asset");
+        BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "");
         assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         assetDataSet.setColors(new int[]{Color.parseColor("#dee8eb"), Color.parseColor("#f2f2ef")});
         assetDataSet.setStackLabels(new String[]{"Equity", "Liabilities"});
@@ -157,13 +130,13 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         LineDataSet revenueDataSet = new LineDataSet(createEntries(set.historicals, "revenue"), "Revenue");
         revenueDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        revenueDataSet.setColor(Color.BLUE);
+        revenueDataSet.setColor(Color.CYAN);
         revenueDataSet.setDrawValues(false);
         revenueDataSet.setDrawCircles(false);
 
         LineDataSet netDataSet = new LineDataSet(createEntries(set.historicals, "netProfit"), "Net");
         netDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        netDataSet.setColor(Color.CYAN);
+        netDataSet.setColor(Color.GREEN);
         netDataSet.setDrawValues(false);
         netDataSet.setDrawCircles(false);
 
@@ -234,19 +207,19 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         ema5DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         ema5DataSet.setDrawCircles(false);
         ema5DataSet.setDrawValues(false);
-        ema5DataSet.setColor(Color.CYAN);
+        ema5DataSet.setColor(Color.GREEN);
 
         LineDataSet ema20DataSet = new LineDataSet(subList(createEntries(set.yahooHistory.ema20),DAY_RANGES[daysRangeIndex]), "EMA20");
         ema20DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         ema20DataSet.setDrawCircles(false);
         ema20DataSet.setDrawValues(false);
-        ema20DataSet.setColor(Color.GREEN);
+        ema20DataSet.setColor(Color.CYAN);
 
         LineDataSet ema80DataSet = new LineDataSet(subList(createEntries(set.yahooHistory.ema80),DAY_RANGES[daysRangeIndex]), "EMA80");
         ema80DataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         ema80DataSet.setDrawCircles(false);
         ema80DataSet.setDrawValues(false);
-        ema80DataSet.setColor(Color.YELLOW);
+        ema80DataSet.setColor(Color.parseColor("#ffa500"));
 
         LineData lineData = new LineData();
         //lineData.addDataSet(closeDataSet);
@@ -256,9 +229,9 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         CandleDataSet candleDataSet = new CandleDataSet(subList(createEntries(hiloes), DAY_RANGES[daysRangeIndex]), "Candle");
         candleDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        candleDataSet.setIncreasingColor(Color.GREEN);
+        candleDataSet.setIncreasingColor(Color.parseColor("#b4ecb4"));
         candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
-        candleDataSet.setDecreasingColor(Color.RED);
+        candleDataSet.setDecreasingColor(Color.parseColor("#ffb2ae"));
         candleDataSet.setDrawValues(false);
 
         CandleData candleData = new CandleData();
@@ -271,7 +244,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         BarDataSet volumeDataSet = new BarDataSet(subList(createEntries(volumes), DAY_RANGES[daysRangeIndex]), "Volume");
         volumeDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        volumeDataSet.setColor(Color.LTGRAY);
+        volumeDataSet.setColor(Color.parseColor("#d3d3d3"));
         volumeDataSet.setDrawValues(false);
 
         BarData barData = new BarData();

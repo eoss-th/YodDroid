@@ -41,6 +41,7 @@ public class SETFIN {
             "EPS Growth %",
             "DVD Growth %",
             "DVD %",
+            "Predict % Chg",
             "Predict %"
     };
 
@@ -57,6 +58,8 @@ public class SETFIN {
                 "Net Growth %",
                 "Margin Growth %",
                 "E/A Growth %",
+                "Predict % Chg",
+                "Predict %",
                 "ROE",
                 "ROA",
                 "EPS Growth %",
@@ -126,7 +129,12 @@ public class SETFIN {
         }
 
         try {
+
+            if (values.get("Last").floatValue()==0)
+                throw new ArithmeticException();
+
             values.put("Predict % Chg", Math.round(((values.get("Predict MA").floatValue() / values.get("Last").floatValue() - 1) * 100.0) * 100.0) / 100.0 );
+
         } catch (Exception e) {
             values.put("Predict % Chg", 0);
         }
