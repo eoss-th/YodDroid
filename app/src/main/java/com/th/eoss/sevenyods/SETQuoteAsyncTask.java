@@ -2,44 +2,58 @@ package com.th.eoss.sevenyods;
 
 import android.os.AsyncTask;
 
+import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETQuote;
 import com.th.eoss.util.SETSummary;
 import com.th.eoss.util.YahooHistory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by wisarut on 30/9/2559.
  */
 
-public class SETQuoteAsyncTask extends AsyncTask<Void, Void, SETQuote> {
+public class SETQuoteAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private static Map<String, Long> timestampMap = new HashMap<>();
-    private String symbol;
-    private SETQuote.SETQuoteListener listener;
+    private List<String> symbols;
 
-    public SETQuoteAsyncTask(String symbol, SETQuote.SETQuoteListener listener) {
-        this.symbol = symbol;
-        this.listener = listener;
+    SETQuoteAsyncTask(List<String> symbols) {
+        //Avoid Concurrent Modification Exception
+        this.symbols = new ArrayList<>();
+        this.symbols.addAll(symbols);
+     }
+
+    SETQuoteAsyncTask(String symbol) {
+        this.symbols = new ArrayList<>();
+        this.symbols.add(symbol);
     }
 
-    @Override
-    protected SETQuote doInBackground(Void... paramss) {
-        Long lastTimestamp = timestampMap.get(symbol);
-        if (lastTimestamp==null)
-            lastTimestamp = 0L;
 
-        if (System.currentTimeMillis() - lastTimestamp > 1000*60) {
-            timestampMap.put(symbol, System.currentTimeMillis());
-            return new SETQuote(symbol);
+    @Override
+    protected Void doInBackground(Void... voids) {
+
+        SETQuote quote;
+        SETFIN setfin;
+        for (String symbol:symbols) {
+            setfin = SETFIN.cache.get(symbol);
+
+            if (setfin!=null) {
+
+                quote = new SETQuote(symbol);
+                setfin.values.put("Last", quote.last);
+                setfin.values.put("% Chg", quote.chgPercent);
+                setfin.values.put("Quote Timestamp", System.currentTimeMillis());
+
+            }
         }
+
         return null;
     }
 
     @Override
-    protected void onPostExecute(SETQuote quote) {
-        if (quote!=null)
-            listener.onLoaded(quote);
+    protected void onPostExecute(Void aVoid) {
     }
 }

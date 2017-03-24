@@ -5,8 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +40,13 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.filtered_main, container, false);
 
+        final SwipeRefreshLayout swipe = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipe.setEnabled(false);
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         adapter = new FilteredStackedBarAdapter(this);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

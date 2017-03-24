@@ -77,12 +77,22 @@
                 />
 
             <TextView
-                android:text="TextView"
+                android:text="+00.00%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentChg"
+                android:layout_below="@id/asset"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
+                />
+
+            <TextView
+                android:text="00.00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/last"
                 android:layout_below="@id/asset"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@id/percentChg"
                 android:paddingRight="5dp"
                 />
 
@@ -94,16 +104,18 @@
                 android:layout_below="@id/asset"
                 android:layout_toLeftOf="@id/last"
                 android:paddingRight="5dp"
+                android:visibility="gone"
                 />
 
             <TextView
-                android:text="TextView"
+                android:text="00.00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pe"
-                android:layout_below="@id/symbol"
+                android:layout_below="@id/last"
                 android:layout_alignParentRight="true"
                 android:paddingRight="5dp"
+                android:visibility="gone"
                 />
 
             <TextView
@@ -111,9 +123,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/peLabel"
-                android:layout_below="@id/symbol"
+                android:layout_below="@id/last"
                 android:layout_toLeftOf="@id/pe"
                 android:paddingRight="5dp"
+                android:visibility="gone"
                 />
 
             <ImageView
@@ -123,6 +136,7 @@
                 android:layout_below="@id/peLabel"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 />
 
             <TextView
@@ -133,6 +147,7 @@
                 android:layout_below="@id/peLabel"
                 android:layout_toRightOf="@+id/trend"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 />
 
             <ImageView

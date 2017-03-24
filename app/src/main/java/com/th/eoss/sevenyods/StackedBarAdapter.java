@@ -26,7 +26,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
-        TextView symbol, last, pe, predictPercentChg;
+        TextView symbol, last, pe, predictPercentChg, percentChg;
         ImageView trend, star;
 
         StackedBarViewHolder (View view) {
@@ -40,6 +40,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
             symbol = (TextView) view.findViewById(R.id.symbol);
             last = (TextView) view.findViewById(R.id.last);
+            percentChg = (TextView) view.findViewById(R.id.percentChg);
             pe = (TextView) view.findViewById(R.id.pe);
             predictPercentChg = (TextView) view.findViewById(R.id.predictPercentChg);
 
@@ -159,6 +160,26 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         holder.symbol.setText(set.symbol);
         holder.last.setText("" + set.getFloatValue("Last"));
+
+        if ( holder.percentChg!=null ) {
+
+            float percentChg = set.getFloatValue("% Chg");
+
+            holder.percentChg.setVisibility(View.VISIBLE);
+
+            if (percentChg == 0) {
+                holder.percentChg.setText("");
+                holder.percentChg.setTextColor(Color.BLACK);
+            } else if (percentChg > 0) {
+                holder.percentChg.setText("(+" + percentChg + "%)");
+                holder.percentChg.setTextColor(Color.parseColor("#006400"));
+            } else {
+                holder.percentChg.setText("(" + percentChg + "%)");
+                holder.percentChg.setTextColor(Color.RED);
+            }
+
+        }
+
         holder.pe.setText("" + set.getFloatValue("P/E"));
 
         float predictPercentChg = set.getFloatValue("Predict % Chg");

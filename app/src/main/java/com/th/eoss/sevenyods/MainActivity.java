@@ -36,9 +36,10 @@ import java.util.TreeSet;
 public class MainActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private StackedBarFragment filteredStackedBarFragment = new FilteredStackedBarFragment();
-    private StackedBarFragment recommendedStackedBarFragment = new RecommendedStackedBarFragment();
-    private ChartFragment chartFragment = new ChartFragment();
+    StackedBarFragment filteredStackedBarFragment = new FilteredStackedBarFragment();
+    StackedBarFragment favouriteStackedBarFragment = new FavouriteStackedBarFragment();
+    StackedBarFragment recommendedStackedBarFragment = new RecommendedStackedBarFragment();
+    ChartFragment chartFragment = new ChartFragment();
 
     private ViewPager pager;
     private DrawerLayout drawer;
@@ -64,7 +65,25 @@ public class MainActivity extends FragmentActivity
         tab = (TabLayout) findViewById(R.id.tab);
         tab.setupWithViewPager(pager);
 
-        int [] icons = {android.R.drawable.ic_menu_zoom, android.R.drawable.star_big_on, android.R.drawable.ic_menu_gallery};
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition()==1) {
+                    favouriteStackedBarFragment.load(loadFromFavorite());
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        int [] icons = {android.R.drawable.ic_menu_zoom, android.R.drawable.btn_star_big_on, R.drawable.yod40, android.R.drawable.ic_menu_gallery};
 
         TextView text;
         for (int i = 0; i < tab.getTabCount(); i++) {
@@ -155,7 +174,7 @@ public class MainActivity extends FragmentActivity
         /**
          * Display Home
          */
-        pager.setCurrentItem(1);
+        pager.setCurrentItem(2);
 
     }
 
@@ -217,14 +236,14 @@ public class MainActivity extends FragmentActivity
 
         List<String> symbols;
 
-        if (id==R.id.fav) {
-            symbols = loadFromFavorite();
-        } else if (id==R.id.all) {
+        if (id==R.id.all) {
 
             symbols = SETFIN.cache_symbols;
 
         } else {
+
             symbols = SETFIN.DICT.get(id);
+
         }
 
         if (symbols!=null) {
@@ -239,7 +258,7 @@ public class MainActivity extends FragmentActivity
 
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
-        private Fragment [] fragments = new Fragment[] {filteredStackedBarFragment, recommendedStackedBarFragment, chartFragment};
+        private Fragment [] fragments = new Fragment[] {filteredStackedBarFragment, favouriteStackedBarFragment, recommendedStackedBarFragment, chartFragment};
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -313,27 +332,23 @@ public class MainActivity extends FragmentActivity
     public void addToFavourite (String symbol) {
         favouriteSymbols.add(symbol);
         updateFavourite();
-        filteredStackedBarFragment.reload();
-        recommendedStackedBarFragment.reload();
 
-        if (groupId==R.id.fav) {
-            loadGroup(groupId, toolbar.getTitle().toString());
-        }
+        filteredStackedBarFragment.reload();
+        favouriteStackedBarFragment.reload();
+        recommendedStackedBarFragment.reload();
     }
 
     public void removeFromFavourite (String symbol) {
         favouriteSymbols.remove(symbol);
         updateFavourite();
-        filteredStackedBarFragment.reload();
-        recommendedStackedBarFragment.reload();
 
-        if (groupId==R.id.fav) {
-            loadGroup(groupId, toolbar.getTitle().toString());
-        }
+        filteredStackedBarFragment.reload();
+        favouriteStackedBarFragment.reload();
+        recommendedStackedBarFragment.reload();
     }
 
     public void displayChart(SETFIN set) {
-        pager.setCurrentItem(2);
+        pager.setCurrentItem(3);
         chartFragment.loadHistoricals(set);
     }
 

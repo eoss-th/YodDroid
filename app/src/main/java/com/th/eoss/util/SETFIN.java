@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -282,6 +283,21 @@ public class SETFIN {
         }
 
         return result;
+    }
+
+    public static void fetchQuotes() {
+
+        Set<String> symbols = cache.keySet();
+
+        SETFIN setfin;
+        SETQuote setQuote;
+        for (String symbol:symbols) {
+
+            setfin = cache.get(symbol);
+            setQuote = new SETQuote(symbol);
+            setfin.values.put("Chg %", setQuote.chgPercent);
+
+        }
     }
 
     private float Float(String text) {

@@ -3,7 +3,6 @@
 
     <item android:title="Yod! Beta">
         <menu>
-            <item android:title="Following" android:id="@+id/fav"/>
             <item android:title="All Sectors" android:id="@+id/all"/>
         </menu>
     </item>

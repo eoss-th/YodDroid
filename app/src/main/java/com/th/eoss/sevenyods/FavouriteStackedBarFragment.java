@@ -1,7 +1,6 @@
 package com.th.eoss.sevenyods;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,22 +17,13 @@ import com.th.eoss.util.SETFIN;
  * Created by eossth on 3/14/2017 AD.
  */
 
-public class RecommendedStackedBarFragment extends StackedBarFragment {
+public class FavouriteStackedBarFragment extends StackedBarFragment {
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        load(SETFIN.cache_symbols);
-
-        filterSortManager.clear();
-        filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter());
-        filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter());
-        filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter());
-        filterSortManager.put("Predict %", new Filter.HigherOrEqualThanFilter());
-
-        filterSortManager.toggleSort("Predict % Chg");
-
+        load(mainActivity().loadFromFavorite());
     }
 
     @Override
@@ -60,9 +50,9 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         });
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        adapter = new StackedBarAdapter(this);
+        adapter = new FilteredStackedBarAdapter(this);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

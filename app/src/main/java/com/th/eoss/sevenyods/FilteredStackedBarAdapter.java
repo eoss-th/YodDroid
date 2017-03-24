@@ -44,6 +44,21 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         FilteredStackedBarHolder holder = (FilteredStackedBarHolder) h;
 
+        /*
+        if (set.values.get("Quote Timestamp")==null ||
+                System.currentTimeMillis() - set.values.get("Quote Timestamp").longValue() > 1000 * 60 * 5) {
+
+            new SETQuoteAsyncTask(set.symbol) {
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    yodContext.mainActivity().filteredStackedBarFragment.reload();
+                }
+
+            }.execute();
+
+        }*/
+
         float predictPercentChg = set.getFloatValue("Predict % Chg");
 
         if (predictPercentChg > 0) {
