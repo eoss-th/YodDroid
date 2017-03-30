@@ -199,6 +199,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
         float last = set.getFloatValue("Last");
         float predictMA = set.getFloatValue("Predict MA");
         int predictPercent = set.getIntValue("Predict %");
+        
 
         holder.trend.setVisibility(View.VISIBLE);
         holder.predictPercentChg.setVisibility(View.VISIBLE);

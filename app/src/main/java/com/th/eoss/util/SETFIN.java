@@ -69,7 +69,7 @@ public class SETFIN {
         }));
     }
 
-    public static final String csvURL = "http://eoss-setfin.appspot.com/csv?";
+    public static final String csvURL = "http://eoss-setfin.appspot.com/csvYod?";
 
     public static final String indexURL = "http://eoss-setfin.appspot.com/SETIndexServlet";
 
@@ -122,6 +122,7 @@ public class SETFIN {
         xd = tokens[25];
         values.put("Predict MA", Float(tokens[26]));
         values.put("Predict %", Float(tokens[27]));
+        values.put("MA5", Float(tokens[28]));
 
         try {
             values.put("XD", xdFateFormat.parse(xd).getTime());
