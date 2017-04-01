@@ -132,11 +132,18 @@ public class SETFIN {
 
         if (values.get("Predict MA").floatValue() > values.get("MA5").floatValue()) {
 
-            if (values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
+            if (values.get("Predict MA").floatValue() >= values.get("MA5").floatValue() &&
+                values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
+
+                values.put("Trend Score", 3);
+
+            } else if (values.get("Predict MA").floatValue() >= values.get("Last").floatValue() &&
+                        values.get("Last").floatValue() >= values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", 2);
 
-            } else {
+            } else if (values.get("Last").floatValue() >= values.get("Predict MA").floatValue() &&
+                    values.get("Predict MA").floatValue() >= values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", 1);
 
@@ -144,14 +151,20 @@ public class SETFIN {
 
         } else if (values.get("Predict MA").floatValue() < values.get("MA5").floatValue()) {
 
-            if (values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
+            if (values.get("Last").floatValue() <= values.get("Predict MA").floatValue() &&
+                values.get("Predict MA").floatValue() <= values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", -1);
 
-            } else {
+            } else if (values.get("Predict MA").floatValue() <= values.get("Last").floatValue() &&
+                values.get("Last").floatValue() <= values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", -2);
 
+            } else if (values.get("Predict MA").floatValue() <= values.get("MA5").floatValue() &&
+                    values.get("MA5").floatValue() <= values.get("Last").floatValue()) {
+
+                values.put("Trend Score", -3);
             }
 
         } else {

@@ -190,7 +190,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         if (predictMA > ma5) {
 
-            holder.predictMA5.setText(">" + ma5);
+            holder.predictMA5.setText("> " + ma5);
             holder.predictMA5.setTextColor(Color.parseColor("#006400"));
 
             if (predictPercent > 90) {
@@ -222,7 +222,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         } else if (predictMA < ma5) {
 
-            holder.predictMA5.setText("<" + ma5);
+            holder.predictMA5.setText("< " + ma5);
             holder.predictMA5.setTextColor(Color.RED);
 
             if (predictPercent > 90) {
