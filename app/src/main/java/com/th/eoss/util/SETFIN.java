@@ -130,15 +130,34 @@ public class SETFIN {
             values.put("XD", Long.MAX_VALUE);
         }
 
-        try {
+        if (values.get("Predict MA").floatValue() > values.get("MA5").floatValue()) {
 
-            if (values.get("Last").floatValue()==0)
-                throw new ArithmeticException();
+            if (values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
 
-            values.put("Predict % Chg", Math.round(((values.get("Predict MA").floatValue() / values.get("Last").floatValue() - 1) * 100.0) * 100.0) / 100.0 );
+                values.put("Trend Score", 2);
 
-        } catch (Exception e) {
-            values.put("Predict % Chg", 0);
+            } else {
+
+                values.put("Trend Score", 1);
+
+            }
+
+        } else if (values.get("Predict MA").floatValue() < values.get("MA5").floatValue()) {
+
+            if (values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
+
+                values.put("Trend Score", -1);
+
+            } else {
+
+                values.put("Trend Score", -2);
+
+            }
+
+        } else {
+
+            values.put("Trend Score", 0);
+
         }
 
         float asset=values.get("Estimated Asset").floatValue()==0?1:values.get("Estimated Asset").floatValue();

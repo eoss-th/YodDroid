@@ -26,7 +26,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
-        TextView symbol, last, pe, predictPercentChg, percentChg;
+        TextView symbol, last, pe, predictMA5, percentChg;
         ImageView trend, star;
 
         StackedBarViewHolder (View view) {
@@ -42,7 +42,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             last = (TextView) view.findViewById(R.id.last);
             percentChg = (TextView) view.findViewById(R.id.percentChg);
             pe = (TextView) view.findViewById(R.id.pe);
-            predictPercentChg = (TextView) view.findViewById(R.id.predictPercentChg);
+            predictMA5 = (TextView) view.findViewById(R.id.predictMA5);
 
             trend = (ImageView) view.findViewById(R.id.trend);
             star = (ImageView) view.findViewById(R.id.star);
@@ -182,29 +182,16 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         holder.pe.setText("" + set.getFloatValue("P/E"));
 
-        float predictPercentChg = set.getFloatValue("Predict % Chg");
-
-        if (predictPercentChg > 0) {
-
-            holder.predictPercentChg.setText("+" + set.getFloatValue("Predict % Chg") + "%");
-            holder.predictPercentChg.setTextColor(Color.parseColor("#006400"));
-
-        } else {
-
-            holder.predictPercentChg.setText(set.getFloatValue("Predict % Chg") + "%");
-            holder.predictPercentChg.setTextColor(Color.RED);
-
-        }
-
-        float last = set.getFloatValue("Last");
         float predictMA = set.getFloatValue("Predict MA");
+        float ma5 = set.getFloatValue("MA5");
         int predictPercent = set.getIntValue("Predict %");
-        
 
         holder.trend.setVisibility(View.VISIBLE);
-        holder.predictPercentChg.setVisibility(View.VISIBLE);
 
-        if (predictMA > last) {
+        if (predictMA > ma5) {
+
+            holder.predictMA5.setText(">" + ma5);
+            holder.predictMA5.setTextColor(Color.parseColor("#006400"));
 
             if (predictPercent > 90) {
 
@@ -229,10 +216,14 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             } else {
                 holder.trend.setImageResource(R.drawable.up51_60);
                 holder.trend.setVisibility(View.INVISIBLE);
-                holder.predictPercentChg.setVisibility(View.INVISIBLE);
+                holder.predictMA5.setVisibility(View.INVISIBLE);
             }
 
-        } else if (predictMA < last) {
+
+        } else if (predictMA < ma5) {
+
+            holder.predictMA5.setText("<" + ma5);
+            holder.predictMA5.setTextColor(Color.RED);
 
             if (predictPercent > 90) {
 
@@ -257,12 +248,15 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             } else {
                 holder.trend.setImageResource(R.drawable.down51_60);
                 holder.trend.setVisibility(View.INVISIBLE);
-                holder.predictPercentChg.setVisibility(View.INVISIBLE);
+                holder.predictMA5.setVisibility(View.INVISIBLE);
             }
 
         } else {
+
+            holder.predictMA5.setText("" + ma5);
+            holder.predictMA5.setTextColor(Color.DKGRAY);
+
             holder.trend.setVisibility(View.INVISIBLE);
-            holder.predictPercentChg.setVisibility(View.INVISIBLE);
         }
 
         if (yodContext.mainActivity().favouriteSymbols().contains(set.symbol)) {

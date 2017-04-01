@@ -65,16 +65,10 @@ public class FilterSortManager {
         Filter filter;
         Set<String> valueNames = filterMap.keySet();
 
-        float conditionValue;
         for (String valueName:valueNames) {
             filter = filterMap.get(valueName);
 
-            if (valueName.equals("Predict %"))
-                conditionValue = 52;
-            else
-                conditionValue = Mean.mean(valueName).value();
-
-            if (!filter.isValid(set.getFloatValue(valueName), conditionValue)) {
+            if (!filter.isValid(set.getFloatValue(valueName))) {
                 return false;
             }
         }
@@ -129,10 +123,10 @@ public class FilterSortManager {
 
             if ( SETFIN.LOW_IS_BETTER.contains(valueName) ) {
                 filters = new String[] {"Lower than Average", "Cancel"};
-                filter = new Filter.LowerOrEqualThanFilter();
+                filter = new Filter.LowerOrEqualThanFilter(valueName);
             } else if (SETFIN.HIGH_IS_BETTER.contains(valueName)) {
                 filters = new String[] {"Higher than Average", "Cancel"};
-                filter = new Filter.HigherOrEqualThanFilter();
+                filter = new Filter.HigherOrEqualThanFilter(valueName);
             } else {
                 filters = null;
                 filter = null;

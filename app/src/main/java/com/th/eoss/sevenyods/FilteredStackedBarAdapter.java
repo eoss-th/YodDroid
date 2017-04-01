@@ -59,24 +59,12 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         }*/
 
-        float predictPercentChg = set.getFloatValue("Predict % Chg");
-
-        if (predictPercentChg > 0) {
-
-            holder.predictPercentChg.setText("+" + set.getFloatValue("Predict % Chg") + "%");
-
-        } else {
-
-            holder.predictPercentChg.setText(set.getFloatValue("Predict % Chg") + "%");
-
-        }
-
         int predictPercent = set.getIntValue("Predict %");
         holder.score.setText("" + predictPercent);
 
         holder.trend.setVisibility(View.VISIBLE);
         holder.predictLabel.setVisibility(View.VISIBLE);
-        holder.predictPercentChg.setVisibility(View.VISIBLE);
+        holder.predictMA5.setVisibility(View.VISIBLE);
         holder.scoreLabel.setVisibility(View.VISIBLE);
         holder.score.setVisibility(View.VISIBLE);
 

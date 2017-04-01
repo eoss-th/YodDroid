@@ -42,9 +42,9 @@
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/predictPercentChgToggle"
+            android:id="@+id/trendToggle"
             android:textSize="10dp"
-            android:textOff="Predict"/>
+            android:textOff="Trend"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
