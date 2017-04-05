@@ -130,41 +130,27 @@ public class SETFIN {
             values.put("XD", Long.MAX_VALUE);
         }
 
-        if (values.get("Predict MA").floatValue() > values.get("MA5").floatValue()) {
+        if (values.get("Predict MA").floatValue() > 0) {
 
-            if (values.get("Predict MA").floatValue() >= values.get("MA5").floatValue() &&
-                values.get("MA5").floatValue() >= values.get("Last").floatValue()) {
-
-                values.put("Trend Score", 3);
-
-            } else if (values.get("Predict MA").floatValue() >= values.get("Last").floatValue() &&
-                        values.get("Last").floatValue() >= values.get("MA5").floatValue()) {
+            if (values.get("Last").floatValue() < values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", 2);
 
-            } else if (values.get("Last").floatValue() >= values.get("Predict MA").floatValue() &&
-                    values.get("Predict MA").floatValue() >= values.get("MA5").floatValue()) {
+            } else {
 
                 values.put("Trend Score", 1);
 
             }
 
-        } else if (values.get("Predict MA").floatValue() < values.get("MA5").floatValue()) {
+        } else if (values.get("Predict MA").floatValue() < 0) {
 
-            if (values.get("Last").floatValue() <= values.get("Predict MA").floatValue() &&
-                values.get("Predict MA").floatValue() <= values.get("MA5").floatValue()) {
-
-                values.put("Trend Score", -1);
-
-            } else if (values.get("Predict MA").floatValue() <= values.get("Last").floatValue() &&
-                values.get("Last").floatValue() <= values.get("MA5").floatValue()) {
+            if (values.get("Last").floatValue() > values.get("MA5").floatValue()) {
 
                 values.put("Trend Score", -2);
 
-            } else if (values.get("Predict MA").floatValue() <= values.get("MA5").floatValue() &&
-                    values.get("MA5").floatValue() <= values.get("Last").floatValue()) {
+            } else {
 
-                values.put("Trend Score", -3);
+                values.put("Trend Score", -1);
             }
 
         } else {

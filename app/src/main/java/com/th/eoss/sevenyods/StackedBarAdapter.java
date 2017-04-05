@@ -188,7 +188,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         holder.trend.setVisibility(View.VISIBLE);
 
-        if (predictMA > ma5) {
+        if (predictMA > 0) {
 
             holder.predictMA5.setText("> " + ma5);
             holder.predictMA5.setTextColor(Color.parseColor("#006400"));
@@ -220,7 +220,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             }
 
 
-        } else if (predictMA < ma5) {
+        } else if (predictMA < 0) {
 
             holder.predictMA5.setText("< " + ma5);
             holder.predictMA5.setTextColor(Color.RED);

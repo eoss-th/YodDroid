@@ -102,16 +102,16 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         this.set = set;
 
-        if (set.historicals==null) {
-            combinedChart.setNoDataText("Loading...");
-            combinedChart.invalidate();
-            new SETFINHistoricalAsyncTask(set, this).execute();
-            return;
-        }
-
         combinedChart.clear();
         combinedChart.getXAxis().resetAxisMinimum();
         combinedChart.getXAxis().resetAxisMaximum();
+        combinedChart.setNoDataText("Loading...");
+        combinedChart.invalidate();
+
+        if (set.historicals==null) {
+            new SETFINHistoricalAsyncTask(set, this).execute();
+            return;
+        }
 
         BarDataSet assetDataSet = new BarDataSet(createBarEntries(set.historicals, "equity", "liabilities"), "");
         assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
@@ -164,17 +164,17 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         });
 
-        combinedChart.getAxisLeft().setAxisMinValue(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
-        combinedChart.getAxisLeft().setAxisMaxValue(combinedData.getYMax() * 1.2f);
+        combinedChart.getAxisLeft().setAxisMinimum(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
+        combinedChart.getAxisLeft().setAxisMaximum(combinedData.getYMax() * 1.2f);
         combinedChart.getAxisLeft().setSpaceTop(10f);
         //combinedChartView.leftAxis.enabled = false
 
-        combinedChart.getAxisRight().setAxisMinValue(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
-        combinedChart.getAxisRight().setAxisMaxValue(combinedData.getYMax() * 1.2f);
+        combinedChart.getAxisRight().setAxisMinimum(combinedData.getYMin() > 0 ? 0:combinedData.getYMin() * 1.2f);
+        combinedChart.getAxisRight().setAxisMaximum(combinedData.getYMax() * 1.2f);
         combinedChart.getAxisRight().setSpaceTop(10f);
 
-        combinedChart.getXAxis().setAxisMinValue(-1f);
-        combinedChart.getXAxis().setAxisMaxValue(set.historicals.size());
+        combinedChart.getXAxis().setAxisMinimum(-1f);
+        combinedChart.getXAxis().setAxisMaximum(set.historicals.size());
         combinedChart.invalidate();
 
     }
@@ -185,16 +185,16 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         this.set = set;
 
-        if (set.yahooHistory==null) {
-            combinedChart.setNoDataText("Loading...");
-            combinedChart.invalidate();
-            new YahooHistoryAsyncTask(set, this).execute();
-            return;
-        }
-
         combinedChart.clear();
         combinedChart.getXAxis().resetAxisMinimum();
         combinedChart.getXAxis().resetAxisMaximum();
+        combinedChart.setNoDataText("Loading...");
+        combinedChart.invalidate();
+
+        if (set.yahooHistory==null) {
+            new YahooHistoryAsyncTask(set, this).execute();
+            return;
+        }
 
         final YahooHistory.HiLo [] hiloes = set.yahooHistory.hilos;
 
@@ -282,12 +282,12 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         });
 
-        combinedChart.getAxisLeft().setAxisMinValue(volumeDataSet.getYMin());
-        combinedChart.getAxisLeft().setAxisMaxValue(volumeDataSet.getYMax() * 3.0f);
+        combinedChart.getAxisLeft().setAxisMinimum(volumeDataSet.getYMin());
+        combinedChart.getAxisLeft().setAxisMaximum(volumeDataSet.getYMax() * 3.0f);
         combinedChart.getAxisLeft().setSpaceTop(20f);
 
-        combinedChart.getAxisRight().setAxisMinValue(closeDataSet.getYMin() * 0.95f);
-        combinedChart.getAxisRight().setAxisMaxValue(closeDataSet.getYMax() * 1.05f);
+        combinedChart.getAxisRight().setAxisMinimum(closeDataSet.getYMin() * 0.95f);
+        combinedChart.getAxisRight().setAxisMaximum(closeDataSet.getYMax() * 1.05f);
         combinedChart.getAxisRight().setSpaceTop(20f);
 
         //combinedChart.getXAxis().setAxisMinValue(0);
