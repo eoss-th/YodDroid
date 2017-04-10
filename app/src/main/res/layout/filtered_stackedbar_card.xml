@@ -78,58 +78,6 @@
                 android:textStyle="bold"
                 />
 
-            <TextView
-                android:text="+00.00%"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentChg"
-                android:layout_below="@id/asset"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                />
-
-            <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/last"
-                android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/percentChg"
-                android:layout_marginRight="10dp"
-                android:textStyle="bold"
-                />
-
-            <TextView
-                android:text="Last:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lastLabel"
-                android:layout_below="@id/asset"
-                android:layout_toLeftOf="@id/last"
-                android:paddingRight="4dp"
-                />
-
-            <TextView
-                android:text="P/E:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/peLabel"
-                android:layout_below="@id/symbol"
-                android:layout_alignStart="@id/lastLabel"
-                android:paddingRight="4dp"
-                />
-
-            <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/peLabel"
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
-                />
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -164,9 +112,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/scoreLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/predictMA5"
-                android:paddingLeft="4dp"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/trend"
+                android:layout_marginTop="5dp"
                 />
 
             <TextView
@@ -174,8 +122,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/score"
-                android:layout_below="@id/symbol"
+                android:layout_below="@id/trend"
                 android:layout_toRightOf="@id/scoreLabel"
+                android:paddingLeft="4dp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:text="DVD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvdLabel"
+                android:layout_below="@id/symbol"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvd"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/dvdLabel"
                 android:paddingLeft="4dp"
                 android:textStyle="bold"
                 />
@@ -186,9 +155,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/xdLabel"
                 android:layout_below="@id/trend"
-                android:layout_toRightOf="@id/trend"
+                android:layout_alignStart="@id/dvdLabel"
                 android:layout_marginTop="5dp"
-                android:paddingLeft="4dp"
                 />
 
             <TextView
@@ -197,32 +165,62 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/xd"
                 android:layout_below="@id/trend"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/xdLabel"
-                android:layout_marginTop="5dp"
                 android:paddingLeft="4dp"
                 />
 
             <TextView
-                android:text="DVD:"
+                android:text="+00.00%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dvdLabel"
-                android:layout_below="@id/trend"
-                android:layout_toRightOf="@id/xd"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="4dp"
+                android:id="@+id/percentChg"
+                android:layout_below="@id/symbol"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
                 />
 
             <TextView
-                android:text="00"
+                android:text="0.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dvd"
+                android:id="@+id/last"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/percentChg"
+                android:layout_marginRight="2dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:text="Last:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lastLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/last"
+                android:paddingRight="4dp"
+                />
+
+            <TextView
+                android:text="P/E:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/peLabel"
                 android:layout_below="@id/trend"
-                android:layout_toRightOf="@id/dvdLabel"
+                android:layout_alignStart="@id/lastLabel"
                 android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:text="0.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pe"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/peLabel"
                 android:paddingLeft="4dp"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 />
 
             <ImageView
@@ -230,11 +228,11 @@
                 android:layout_height="20dp"
                 android:id="@+id/star"
                 android:src="@android:drawable/btn_star_big_off"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/peLabel"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 />
         </RelativeLayout>
 
