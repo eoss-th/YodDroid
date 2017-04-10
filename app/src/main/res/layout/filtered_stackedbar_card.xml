@@ -78,22 +78,13 @@
                 android:textStyle="bold"
                 />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/symbol"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5dp"
-                />
-
             <TextView
                 android:text="Trend:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/predictLabel"
                 android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/trend"
+                android:layout_alignParentLeft="true"
                 android:paddingLeft="4dp"
                 />
 
@@ -104,7 +95,7 @@
                 android:id="@+id/predictMA5"
                 android:layout_below="@id/symbol"
                 android:layout_toRightOf="@id/predictLabel"
-                android:paddingLeft="4dp"
+                android:paddingLeft="2dp"
                 />
 
             <TextView
@@ -112,8 +103,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/scoreLabel"
-                android:layout_below="@id/trend"
-                android:layout_toRightOf="@id/trend"
+                android:layout_below="@id/predictLabel"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="4dp"
                 android:layout_marginTop="5dp"
                 />
 
@@ -122,20 +114,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/score"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/predictLabel"
                 android:layout_toRightOf="@id/scoreLabel"
-                android:paddingLeft="4dp"
+                android:paddingLeft="2dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:text="DVD:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dvdLabel"
-                android:layout_below="@id/symbol"
-                android:layout_centerHorizontal="true"
                 />
 
             <TextView
@@ -144,9 +127,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/dvd"
                 android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/dvdLabel"
-                android:paddingLeft="4dp"
+                android:layout_centerHorizontal="true"
                 android:textStyle="bold"
+                />
+
+            <TextView
+                android:text="DVD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvdLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/dvd"
+                android:paddingRight="2dp"
                 />
 
             <TextView
@@ -154,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/xdLabel"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/predictLabel"
                 android:layout_alignStart="@id/dvdLabel"
                 android:layout_marginTop="5dp"
                 />
@@ -164,10 +156,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/xd"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/dvdLabel"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/xdLabel"
-                android:paddingLeft="4dp"
+                android:paddingLeft="2dp"
                 />
 
             <TextView
@@ -177,7 +169,7 @@
                 android:id="@+id/percentChg"
                 android:layout_below="@id/symbol"
                 android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
+                android:paddingRight="4dp"
                 />
 
             <TextView
@@ -198,7 +190,7 @@
                 android:id="@+id/lastLabel"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/last"
-                android:paddingRight="4dp"
+                android:paddingRight="2dp"
                 />
 
             <TextView
@@ -206,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/peLabel"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/lastLabel"
                 android:layout_alignStart="@id/lastLabel"
                 android:layout_marginTop="5dp"
                 />
@@ -216,11 +208,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pe"
-                android:layout_below="@id/trend"
+                android:layout_below="@id/lastLabel"
                 android:layout_toRightOf="@id/peLabel"
                 android:paddingLeft="4dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/trend"
+                android:layout_below="@id/peLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
                 />
 
             <ImageView
