@@ -32,7 +32,7 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity)getActivity()).loadGroup(R.id.all, "All Sectors");
+        //((MainActivity)getActivity()).loadGroup(R.id.all, "All Sectors");
     }
 
     @Override

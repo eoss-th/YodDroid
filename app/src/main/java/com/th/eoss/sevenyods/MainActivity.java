@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -130,7 +131,7 @@ public class MainActivity extends FragmentActivity
          * Create Search
          */
         SearchView searchView = (SearchView) navigationView.getHeaderView(0).findViewById(R.id.searchView);
-
+        //searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -164,13 +165,14 @@ public class MainActivity extends FragmentActivity
 
                 if (newText.trim().isEmpty()) {
                     //Return to last group
-                    reloadLastGroup();
+                   reloadLastGroup();
                 }
 
                 return false;
             }
         });
 
+        loadGroup(R.id.all, "All Sectors");
         /**
          * Display Home
          */

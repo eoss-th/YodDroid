@@ -9,6 +9,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +24,9 @@ import java.util.TreeMap;
 
 public class SETFIN {
 
-    public static final DateFormat xdFateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final DateFormat xdDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final DateFormat xdDateFormat2 = new SimpleDateFormat("dd MMM yy", Locale.US);
+
     public static final NumberFormat numberFormat = new DecimalFormat("0.00");
 
     public static final List<String> cache_symbols = new ArrayList<>();
@@ -81,6 +85,7 @@ public class SETFIN {
     public String date;
     public String xd;
     public String dvd;
+    public boolean isStillXD;
     
     public Map<String, Number> values;
 
@@ -118,17 +123,32 @@ public class SETFIN {
         values.put("Estimated Equity", Float(tokens[21]));
         values.put("Estimated Revenue", Float(tokens[22]));
         values.put("Estimated Net", Float(tokens[23]));
-        dvd = tokens[24];
-        xd = tokens[25];
+
+        String dvdText = tokens[24].trim();
+        if ( !dvdText.isEmpty() && !dvdText.equals("null") )
+            dvd = dvdText;
+        else
+            dvd = "";
+
+        try {
+            Date xdDate = xdDateFormat.parse(tokens[25]);
+            xd = xdDateFormat2.format(xdDate);
+
+            Calendar xdCalendar = Calendar.getInstance(Locale.US);
+            xdCalendar.setTime(xdDate);
+
+            Calendar nowCalendar = Calendar.getInstance(Locale.US);
+
+            isStillXD = nowCalendar.before(xdCalendar);
+
+        } catch (Exception e) {
+            xd = "";
+            isStillXD = false;
+        }
+
         values.put("Predict MA", Float(tokens[26]));
         values.put("Predict %", Float(tokens[27]));
         values.put("MA5", Float(tokens[28]));
-
-        try {
-            values.put("XD", xdFateFormat.parse(xd).getTime());
-        } catch (Exception e) {
-            values.put("XD", Long.MAX_VALUE);
-        }
 
         if (values.get("Predict MA").floatValue() > 0) {
 

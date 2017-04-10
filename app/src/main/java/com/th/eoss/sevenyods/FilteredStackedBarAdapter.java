@@ -1,5 +1,6 @@
 package com.th.eoss.sevenyods;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
     class FilteredStackedBarHolder extends StackedBarViewHolder {
 
-        TextView score, scoreLabel, predictLabel;
+        TextView score, scoreLabel, predictLabel, xd, xdLabel, dvd, dvdLabel;
 
         FilteredStackedBarHolder(View view) {
             super(view);
@@ -25,6 +26,10 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
             score = (TextView) view.findViewById(R.id.score);
             scoreLabel = (TextView) view.findViewById(R.id.scoreLabel);
             predictLabel = (TextView) view.findViewById(R.id.predictLabel);
+            xd = (TextView) view.findViewById(R.id.xd);
+            xdLabel = (TextView) view.findViewById(R.id.xdLabel);
+            dvd = (TextView) view.findViewById(R.id.dvd);
+            dvdLabel = (TextView) view.findViewById(R.id.dvdLabel);
         }
 
     }
@@ -67,6 +72,27 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
         holder.predictMA5.setVisibility(View.VISIBLE);
         holder.scoreLabel.setVisibility(View.VISIBLE);
         holder.score.setVisibility(View.VISIBLE);
+
+        holder.dvd.setText(set.dvd);
+        holder.xd.setText(set.xd);
+
+        if (set.xd.isEmpty()) {
+            holder.xd.setVisibility(View.GONE);
+            holder.xdLabel.setVisibility(View.GONE);
+            holder.dvd.setVisibility(View.GONE);
+            holder.dvdLabel.setVisibility(View.GONE);
+        } else {
+            holder.xd.setVisibility(View.VISIBLE);
+            holder.xdLabel.setVisibility(View.VISIBLE);
+            holder.dvd.setVisibility(View.VISIBLE);
+            holder.dvdLabel.setVisibility(View.VISIBLE);
+        }
+
+        if (set.isStillXD) {
+            holder.xd.setTextColor(Color.parseColor("#006400"));
+        } else {
+            holder.xd.setTextColor(Color.RED);
+        }
 
     }
 

@@ -180,6 +180,51 @@
                 android:textStyle="bold"
                 />
 
+            <TextView
+                android:text="XD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xdLabel"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/trend"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="YYYY-MM-DD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xd"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/xdLabel"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="DVD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvdLabel"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/xd"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="4dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvd"
+                android:layout_below="@id/trend"
+                android:layout_toRightOf="@id/dvdLabel"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="4dp"
+                android:textStyle="bold"
+                />
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
