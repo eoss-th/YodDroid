@@ -85,7 +85,7 @@
                 android:id="@+id/predictLabel"
                 android:layout_below="@id/symbol"
                 android:layout_alignParentLeft="true"
-                android:paddingLeft="4dp"
+                android:paddingLeft="5dp"
                 />
 
             <TextView
@@ -105,7 +105,7 @@
                 android:id="@+id/scoreLabel"
                 android:layout_below="@id/predictLabel"
                 android:layout_alignParentLeft="true"
-                android:paddingLeft="4dp"
+                android:paddingLeft="5dp"
                 android:layout_marginTop="5dp"
                 />
 
@@ -117,7 +117,6 @@
                 android:layout_below="@id/predictLabel"
                 android:layout_toRightOf="@id/scoreLabel"
                 android:paddingLeft="2dp"
-                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 />
 
@@ -128,7 +127,6 @@
                 android:id="@+id/dvd"
                 android:layout_below="@id/symbol"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
                 />
 
             <TextView
@@ -169,7 +167,8 @@
                 android:id="@+id/percentChg"
                 android:layout_below="@id/symbol"
                 android:layout_alignParentRight="true"
-                android:paddingRight="4dp"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="0dp"
                 />
 
             <TextView
@@ -179,8 +178,6 @@
                 android:id="@+id/last"
                 android:layout_below="@id/symbol"
                 android:layout_toLeftOf="@id/percentChg"
-                android:layout_marginRight="2dp"
-                android:textStyle="bold"
                 />
 
             <TextView
@@ -194,24 +191,24 @@
                 />
 
             <TextView
-                android:text="P/E:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/peLabel"
-                android:layout_below="@id/lastLabel"
-                android:layout_alignStart="@id/lastLabel"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
                 android:text="0.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pe"
                 android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/peLabel"
-                android:paddingLeft="4dp"
-                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:text="P/E:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/peLabel"
+                android:layout_below="@id/lastLabel"
+                android:layout_toLeftOf="@id/pe"
+                android:paddingRight="2dp"
                 android:layout_marginTop="5dp"
                 />
 
