@@ -312,6 +312,11 @@ public class SETFIN {
             for (SETFIN set:result) {
                 cache_symbols.add(set.symbol);
                 cache.put(set.symbol, set);
+
+                for (String head:MEAN_HEADERS) {
+                    Mean.add(set.industry + "." + set.sector + "." + head, set.getFloatValue(head));
+                }
+
             }
 
             br.close();

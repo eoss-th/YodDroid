@@ -27,11 +27,11 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
         load(SETFIN.cache_symbols);
 
         filterSortManager.clear();
-        //filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter("Net Growth %"));
-        //filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter("E/A Growth %"));
-        //filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter("P/E"));
+        filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter("Net Growth %"));
+        filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter("E/A Growth %"));
+        filterSortManager.put("P/E", new Filter.LowerOrEqualThanFilter("P/E"));
         filterSortManager.put("Predict %", new Filter.HigherOrEqualThanFilter(70));
-        filterSortManager.put("Trend Score", new Filter.HigherOrEqualThanFilter(2));
+        //filterSortManager.put("Trend Score", new Filter.HigherOrEqualThanFilter(2));
 
     }
 

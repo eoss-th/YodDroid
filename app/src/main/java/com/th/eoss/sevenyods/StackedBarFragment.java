@@ -69,9 +69,10 @@ public abstract class StackedBarFragment extends Fragment implements YODContext 
             if (set!=null) {
                 map.put(symbol, set);
 
+                /*
                 for (String head:SETFIN.MEAN_HEADERS) {
                     Mean.add(head, set.getFloatValue(head));
-                }
+                }*/
             }
         }
 

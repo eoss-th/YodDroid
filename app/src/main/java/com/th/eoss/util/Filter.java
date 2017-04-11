@@ -25,7 +25,7 @@ public abstract class Filter {
         this(meanValueName, 0);
     }
 
-    public abstract boolean isValid(float value);
+    public abstract boolean isValid(SETFIN set, String meanValueName);
 
     public static class LowerOrEqualThanFilter extends Filter {
 
@@ -37,12 +37,14 @@ public abstract class Filter {
             super(defaultFilterValue);
         }
 
-        public boolean isValid (float value) {
+        public boolean isValid (SETFIN set, String meanValueName) {
 
-            if ( meanValueName!=null && Mean.mean(meanValueName)!=null )
-                return value <= Mean.mean(meanValueName).value();
+            if ( meanValueName!=null && Mean.mean(set.industry + "." + set.sector + "." + meanValueName)!=null )
+                return set.getFloatValue(meanValueName)
+                        <= Mean.mean(set.industry + "." + set.sector + "." + meanValueName).value()
+                        && set.getFloatValue(meanValueName) > 0;
 
-            return value <= defaultFilterValue;
+            return set.getFloatValue(meanValueName) <= defaultFilterValue;
         }
     }
 
@@ -56,12 +58,13 @@ public abstract class Filter {
             super(defaultFilterValue);
         }
 
-        public boolean isValid (float value) {
+        public boolean isValid (SETFIN set, String meanValueName) {
 
-            if ( meanValueName!=null && Mean.mean(meanValueName)!=null )
-                return value >= Mean.mean(meanValueName).value();
+            if ( meanValueName!=null && Mean.mean(set.industry + "." + set.sector + "." + meanValueName)!=null )
+                return set.getFloatValue(meanValueName)
+                        >= Mean.mean(set.industry + "." + set.sector + "." + meanValueName).value();
 
-            return value >= defaultFilterValue;
+            return set.getFloatValue(meanValueName) >= defaultFilterValue;
         }
     }
 }

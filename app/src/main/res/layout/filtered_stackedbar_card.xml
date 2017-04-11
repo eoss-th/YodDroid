@@ -168,7 +168,7 @@
                 android:layout_below="@id/symbol"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
-                android:paddingLeft="0dp"
+                android:paddingLeft="1dp"
                 />
 
             <TextView

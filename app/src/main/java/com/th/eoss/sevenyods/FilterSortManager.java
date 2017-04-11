@@ -68,7 +68,7 @@ public class FilterSortManager {
         for (String valueName:valueNames) {
             filter = filterMap.get(valueName);
 
-            if (!filter.isValid(set.getFloatValue(valueName))) {
+            if (!filter.isValid(set, valueName)) {
                 return false;
             }
         }

@@ -171,10 +171,10 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
                 holder.percentChg.setText("");
                 holder.percentChg.setTextColor(Color.BLACK);
             } else if (percentChg > 0) {
-                holder.percentChg.setText(" (+" + percentChg + "%)");
+                holder.percentChg.setText("(+" + percentChg + "%)");
                 holder.percentChg.setTextColor(Color.parseColor("#006400"));
             } else {
-                holder.percentChg.setText(" (" + percentChg + "%)");
+                holder.percentChg.setText("(" + percentChg + "%)");
                 holder.percentChg.setTextColor(Color.RED);
             }
 
