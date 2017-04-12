@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/scoreToggle"
             android:textSize="10dp"
-            android:textOff="Score"/>
+            android:textOff="Accurate"/>
 
     </LinearLayout>
 

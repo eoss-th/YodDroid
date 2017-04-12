@@ -99,7 +99,7 @@
                 />
 
             <TextView
-                android:text="Score:"
+                android:text="Accurate:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/scoreLabel"
