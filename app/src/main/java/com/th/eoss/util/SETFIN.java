@@ -300,7 +300,7 @@ public class SETFIN {
         List<SETFIN> result = new ArrayList<>();
 
         try {
-            URL url = new URL(csvURL);
+            URL url = new URL(csvURL+System.currentTimeMillis());
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
             br.readLine();
