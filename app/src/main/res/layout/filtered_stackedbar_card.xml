@@ -79,7 +79,7 @@
                 />
 
             <TextView
-                android:text="Trend:"
+                android:text="Predict:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/predictLabel"
@@ -88,13 +88,22 @@
                 android:paddingLeft="5dp"
                 />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/trend"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/predictLabel"
+                android:paddingLeft="2dp"
+                />
+
             <TextView
                 android:text="00.00%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/predictMA5"
                 android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/predictLabel"
+                android:layout_toRightOf="@id/trend"
                 android:paddingLeft="2dp"
                 />
 
@@ -121,43 +130,12 @@
                 />
 
             <TextView
-                android:text="00"
+                android:text="0.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dvd"
+                android:id="@+id/last"
                 android:layout_below="@id/symbol"
                 android:layout_centerHorizontal="true"
-                />
-
-            <TextView
-                android:text="DVD:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/dvdLabel"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/dvd"
-                android:paddingRight="2dp"
-                />
-
-            <TextView
-                android:text="XD:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/xdLabel"
-                android:layout_below="@id/predictLabel"
-                android:layout_alignStart="@id/dvdLabel"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:text="YYYY-MM-DD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/xd"
-                android:layout_below="@id/dvdLabel"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/xdLabel"
-                android:paddingLeft="2dp"
                 />
 
             <TextView
@@ -166,18 +144,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/percentChg"
                 android:layout_below="@id/symbol"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
                 android:paddingLeft="1dp"
-                />
-
-            <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/last"
-                android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/percentChg"
+                android:layout_toRightOf="@id/last"
                 />
 
             <TextView
@@ -191,36 +159,67 @@
                 />
 
             <TextView
-                android:text="0.0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/lastLabel"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
                 android:text="P/E:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/peLabel"
                 android:layout_below="@id/lastLabel"
-                android:layout_toLeftOf="@id/pe"
-                android:paddingRight="2dp"
+                android:layout_alignStart="@id/lastLabel"
                 android:layout_marginTop="5dp"
                 />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/peLabel"
-                android:layout_alignParentLeft="true"
+            <TextView
+                android:text="0.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pe"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/peLabel"
+                android:paddingLeft="2dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvd"
+                android:layout_below="@id/symbol"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:text="DVD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dvdLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/dvd"
+                android:paddingRight="2dp"
+                />
+
+            <TextView
+                android:text="YYYY-MM-DD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xd"
+                android:layout_below="@id/dvdLabel"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp"
+                android:paddingLeft="2dp"
+                />
+
+            <TextView
+                android:text="XD:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xdLabel"
+                android:layout_below="@id/predictLabel"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@id/xd"
+                android:paddingRight="2dp"
                 />
 
             <ImageView
