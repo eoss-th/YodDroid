@@ -1,6 +1,7 @@
 package com.th.eoss.sevenyods;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.th.eoss.util.SETFIN;
@@ -29,5 +30,7 @@ public class YahooHistoryAsyncTask extends AsyncTask<Void, Void, YahooHistory> {
     protected void onPostExecute(YahooHistory yahooHistory) {
         set.yahooHistory = yahooHistory;
         chartFragment.loadYahoo(set);
+
+        Log.d("YAHOO", set.symbol + ":" + set.yahooHistory.closes);
     }
 }

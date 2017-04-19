@@ -16,7 +16,7 @@ import java.util.Stack;
  */
 
 public class YahooHistory {
-    public static final String YAHOO_URL = "http://ichart.finance.yahoo.com/table.csv?&a=01&b=19&c=2010&s=";
+    public static final String YAHOO_URL = "https://ichart.finance.yahoo.com/table.csv?&a=01&b=19&c=2010&s=";
     public String symbol;
 
     public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -62,7 +62,7 @@ public class YahooHistory {
             symbol = symbol.replace("&","&amp;");
             symbol = symbol.replace(" ","%20");
             symbol += ".BK";
-            br = new BufferedReader(new InputStreamReader(new URL(YAHOO_URL+symbol).openStream()));
+            br = new BufferedReader(new InputStreamReader(new URL(YAHOO_URL+symbol+"&"+System.currentTimeMillis()).openStream()));
             String line;
             Stack<String> stack = new Stack<String> ();
             while ((line=br.readLine())!=null) {
@@ -153,5 +153,9 @@ public class YahooHistory {
         }
 
         return emas;
+    }
+
+    public static void main(String[]args) {
+        new YahooHistory("2S");
     }
 }
