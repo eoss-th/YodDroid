@@ -28,6 +28,7 @@ public class RecommendedStackedBarFragment extends StackedBarFragment {
 
         filterSortManager.clear();
         filterSortManager.put("Net Growth %", new Filter.HigherOrEqualThanFilter("Net Growth %"));
+        filterSortManager.put("E/A Growth %", new Filter.HigherOrEqualThanFilter("E/A Growth %"));
         filterSortManager.put("PEG", new Filter.LowerOrEqualThanFilter(1));
         filterSortManager.put("PEG", new Filter.HigherThanFilter(0));
 

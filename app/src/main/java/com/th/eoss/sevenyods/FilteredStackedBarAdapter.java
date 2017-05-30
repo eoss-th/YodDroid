@@ -72,6 +72,8 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         int netGrowthPercent = set.getIntValue("Net Growth %");
 
+        holder.pe.setText("" + set.getFloatValue("P/E"));
+
         holder.growth.setText(netGrowthPercent + "%");
 
         if (set.xd.isEmpty()) {

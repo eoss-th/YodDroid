@@ -120,6 +120,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         assetDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         assetDataSet.setColors(new int[]{Color.parseColor("#dee8eb"), Color.parseColor("#f2f2ef")});
         assetDataSet.setStackLabels(new String[]{"Equity", "Liabilities"});
+        assetDataSet.setDrawValues(false);
 
         BarDataSet paidUpCapitalDataSet = new BarDataSet(createBarEntries(set.historicals, "paidUpCapital"), "Paidup Capital");
         paidUpCapitalDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);

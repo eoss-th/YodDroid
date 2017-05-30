@@ -131,22 +131,22 @@
                 />
 
             <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/symbol"
-                android:layout_centerHorizontal="true"
-                />
-
-            <TextView
                 android:text="P/E:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/peLabel"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/pe"
-                android:paddingRight="2dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pe"
+                android:layout_below="@id/symbol"
+                android:layout_toRightOf="@id/peLabel"
+                android:paddingLeft="2dp"
                 />
 
             <TextView
@@ -155,8 +155,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/pegLabel"
                 android:layout_below="@id/peLabel"
-                android:layout_alignStart="@id/peLabel"
                 android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/peLabel"
                 />
 
             <TextView
@@ -165,9 +165,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/peg"
                 android:layout_below="@id/peLabel"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/pegLabel"
                 android:paddingLeft="2dp"
-                android:layout_marginTop="5dp"
                 />
 
             <TextView
