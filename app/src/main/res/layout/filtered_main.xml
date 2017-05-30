@@ -22,35 +22,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/netGrowthToggle"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:textOff="Net ^"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/equityGrowthToggle"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:textOff="Equity ^"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/peToggle"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:textOff="P/E"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/trendToggle"
-            android:textSize="10dp"
-            android:textOff="Trend"/>
+            android:textSize="9dp"
+            android:textOff="Predict"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/scoreToggle"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:textOff="Accurate"/>
 
     </LinearLayout>
