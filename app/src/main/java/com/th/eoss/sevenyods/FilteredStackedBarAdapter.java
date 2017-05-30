@@ -18,18 +18,20 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
     class FilteredStackedBarHolder extends StackedBarViewHolder {
 
-        TextView score, scoreLabel, predictLabel, xd, xdLabel, dvd, dvdLabel;
+        TextView xd, xdLabel, dvd, dvdLabel, pe, growth;
 
         FilteredStackedBarHolder(View view) {
             super(view);
 
-            score = (TextView) view.findViewById(R.id.score);
-            scoreLabel = (TextView) view.findViewById(R.id.scoreLabel);
-            predictLabel = (TextView) view.findViewById(R.id.predictLabel);
             xd = (TextView) view.findViewById(R.id.xd);
             xdLabel = (TextView) view.findViewById(R.id.xdLabel);
             dvd = (TextView) view.findViewById(R.id.dvd);
             dvdLabel = (TextView) view.findViewById(R.id.dvdLabel);
+
+            pe = (TextView) view.findViewById(R.id.pe);
+
+            growth = (TextView) view.findViewById(R.id.growth);
+
         }
 
     }
@@ -64,17 +66,13 @@ public class FilteredStackedBarAdapter extends StackedBarAdapter {
 
         }*/
 
-        int predictPercent = set.getIntValue("Predict %");
-        holder.score.setText("" + predictPercent);
-
-        holder.trend.setVisibility(View.VISIBLE);
-        holder.predictLabel.setVisibility(View.VISIBLE);
-        holder.predictMA5.setVisibility(View.VISIBLE);
-        holder.scoreLabel.setVisibility(View.VISIBLE);
-        holder.score.setVisibility(View.VISIBLE);
 
         holder.dvd.setText(set.dvd);
         holder.xd.setText(set.xd);
+
+        int netGrowthPercent = set.getIntValue("Net Growth %");
+
+        holder.growth.setText(netGrowthPercent + "%");
 
         if (set.xd.isEmpty()) {
             holder.xd.setVisibility(View.GONE);

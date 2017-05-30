@@ -46,8 +46,7 @@ public class SETFIN {
             "EPS Growth %",
             "DVD Growth %",
             "DVD %",
-            "Predict % Chg",
-            "Predict %"
+            "PEG"
     };
 
     public static final List<String> LOW_IS_BETTER = new ArrayList<>();
@@ -57,14 +56,13 @@ public class SETFIN {
     static {
         LOW_IS_BETTER.addAll(Arrays.asList(new String[] {
                 "P/E",
-                "P/BV"
+                "P/BV",
+                "PEG"
         }));
         HIGH_IS_BETTER.addAll(Arrays.asList(new String[]  {
                 "Net Growth %",
                 "Margin Growth %",
                 "E/A Growth %",
-                "Predict % Chg",
-                "Predict %",
                 "ROE",
                 "ROA",
                 "EPS Growth %",
@@ -234,6 +232,11 @@ public class SETFIN {
 
         values.put("G/A", equityGrowth / asset);
 
+        try {
+            values.put("PEG", round(values.get("P/E").floatValue() / netGrowthPerent));
+        } catch (Exception e) {
+            values.put("PEG", 0);
+        }
 
 /*
         //Cleansing Data for Sorting
@@ -542,5 +545,9 @@ public class SETFIN {
     public YahooHistory yahooHistory() {
 
         return yahooHistory;
+    }
+
+    private float round (float num) {
+        return (float) (Math.round(num * 100.0)/100.0);
     }
 }

@@ -42,16 +42,9 @@
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/trendToggle"
+            android:id="@+id/pegToggle"
             android:textSize="9dp"
-            android:textOff="Predict"/>
-
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/scoreToggle"
-            android:textSize="9dp"
-            android:textOff="Accurate"/>
+            android:textOff="PEG"/>
 
     </LinearLayout>
 

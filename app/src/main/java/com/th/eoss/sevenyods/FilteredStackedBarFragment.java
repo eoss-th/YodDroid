@@ -53,10 +53,9 @@ public class FilteredStackedBarFragment extends StackedBarFragment implements Vi
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.netGrowthToggle), "Net Growth %");
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.equityGrowthToggle), "E/A Growth %");
         toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.peToggle), "P/E");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.trendToggle), "Trend Score");
-        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.scoreToggle), "Predict %");
+        toggleButtonMap.put((ToggleButton)rootView.findViewById(R.id.pegToggle), "PEG");
 
-        int buttonWidth = displayMetrics.widthPixels / 5;
+        int buttonWidth = displayMetrics.widthPixels / 4;
         Set<ToggleButton> toggleButtons = toggleButtonMap.keySet();
         for (ToggleButton toggleButton:toggleButtons) {
             toggleButton.setText(toggleButton.getTextOff());

@@ -79,54 +79,13 @@
                 />
 
             <TextView
-                android:text="Predict:"
+                android:text="Last:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/predictLabel"
+                android:id="@+id/lastLabel"
                 android:layout_below="@id/symbol"
                 android:layout_alignParentLeft="true"
                 android:paddingLeft="5dp"
-                />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/predictLabel"
-                android:paddingLeft="2dp"
-                />
-
-            <TextView
-                android:text="00.00%"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictMA5"
-                android:layout_below="@id/symbol"
-                android:layout_toRightOf="@id/trend"
-                android:paddingLeft="2dp"
-                />
-
-            <TextView
-                android:text="Accurate:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/scoreLabel"
-                android:layout_below="@id/predictLabel"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="5dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:text="00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/score"
-                android:layout_below="@id/predictLabel"
-                android:layout_toRightOf="@id/scoreLabel"
-                android:paddingLeft="2dp"
-                android:layout_marginTop="5dp"
                 />
 
             <TextView
@@ -135,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/last"
                 android:layout_below="@id/symbol"
-                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@id/lastLabel"
+                android:paddingLeft="2dp"
                 />
 
             <TextView
@@ -149,13 +109,34 @@
                 />
 
             <TextView
-                android:text="Last:"
+                android:text="Growth:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lastLabel"
+                android:id="@+id/growthLabel"
+                android:layout_below="@id/lastLabel"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/growth"
+                android:layout_below="@id/lastLabel"
+                android:layout_toRightOf="@id/growthLabel"
+                android:paddingLeft="2dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pe"
                 android:layout_below="@id/symbol"
-                android:layout_toLeftOf="@id/last"
-                android:paddingRight="2dp"
+                android:layout_centerHorizontal="true"
                 />
 
             <TextView
@@ -163,8 +144,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/peLabel"
-                android:layout_below="@id/lastLabel"
-                android:layout_alignStart="@id/lastLabel"
+                android:layout_below="@id/symbol"
+                android:layout_toLeftOf="@id/pe"
+                android:paddingRight="2dp"
+                />
+
+            <TextView
+                android:text="PEG:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pegLabel"
+                android:layout_below="@id/peLabel"
+                android:layout_alignStart="@id/peLabel"
                 android:layout_marginTop="5dp"
                 />
 
@@ -172,9 +163,9 @@
                 android:text="0.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pe"
-                android:layout_below="@id/lastLabel"
-                android:layout_toRightOf="@id/peLabel"
+                android:id="@+id/peg"
+                android:layout_below="@id/peLabel"
+                android:layout_toRightOf="@id/pegLabel"
                 android:paddingLeft="2dp"
                 android:layout_marginTop="5dp"
                 />
@@ -216,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/xdLabel"
-                android:layout_below="@id/predictLabel"
+                android:layout_below="@id/lastLabel"
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@id/xd"
                 android:paddingRight="2dp"
@@ -227,7 +218,7 @@
                 android:layout_height="20dp"
                 android:id="@+id/star"
                 android:src="@android:drawable/btn_star_big_off"
-                android:layout_below="@id/peLabel"
+                android:layout_below="@id/growthLabel"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"

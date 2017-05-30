@@ -109,46 +109,23 @@
                 />
 
             <TextView
+                android:text="PEG : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pegLabel"
+                android:layout_below="@id/last"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="5dp"
+                />
+
+            <TextView
                 android:text="00.00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pe"
+                android:id="@+id/peg"
                 android:layout_below="@id/last"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                android:visibility="gone"
-                />
-
-            <TextView
-                android:text="P/E : "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/peLabel"
-                android:layout_below="@id/last"
-                android:layout_toLeftOf="@id/pe"
-                android:paddingRight="5dp"
-                android:visibility="gone"
-                />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/trend"
-                android:layout_below="@id/peLabel"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:text="(00.00%)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/predictMA5"
-                android:layout_below="@id/peLabel"
-                android:layout_toRightOf="@+id/trend"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/pegLabel"
+                android:paddingLeft="2dp"
                 />
 
             <ImageView
@@ -156,7 +133,7 @@
                 android:layout_height="20dp"
                 android:id="@+id/star"
                 android:src="@android:drawable/btn_star_big_off"
-                android:layout_below="@id/peLabel"
+                android:layout_below="@id/pegLabel"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"

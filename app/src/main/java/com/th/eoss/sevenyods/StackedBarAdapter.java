@@ -26,8 +26,8 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
     class StackedBarViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout asset, equityGrowth, equity, netGrowth, net;
-        TextView symbol, last, pe, predictMA5, percentChg;
-        ImageView trend, star;
+        TextView symbol, last, percentChg, peg;
+        ImageView star;
 
         StackedBarViewHolder (View view) {
             super(view);
@@ -41,10 +41,8 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
             symbol = (TextView) view.findViewById(R.id.symbol);
             last = (TextView) view.findViewById(R.id.last);
             percentChg = (TextView) view.findViewById(R.id.percentChg);
-            pe = (TextView) view.findViewById(R.id.pe);
-            predictMA5 = (TextView) view.findViewById(R.id.predictMA5);
+            peg = (TextView) view.findViewById(R.id.peg);
 
-            trend = (ImageView) view.findViewById(R.id.trend);
             star = (ImageView) view.findViewById(R.id.star);
         }
 
@@ -180,84 +178,7 @@ public class StackedBarAdapter extends RecyclerView.Adapter<StackedBarAdapter.St
 
         }
 
-        holder.pe.setText("" + set.getFloatValue("P/E"));
-
-        float predictMA = set.getFloatValue("Predict MA");
-        float ma5 = set.getFloatValue("MA5");
-        int predictPercent = set.getIntValue("Predict %");
-
-        holder.trend.setVisibility(View.VISIBLE);
-
-        if (predictMA > 0) {
-
-            holder.predictMA5.setText("> " + ma5);
-            holder.predictMA5.setTextColor(Color.parseColor("#006400"));
-
-            if (predictPercent > 90) {
-
-                holder.trend.setImageResource(R.drawable.up91_100);
-
-            } else if (predictPercent > 80) {
-
-                holder.trend.setImageResource(R.drawable.up91_100);
-
-            } else if (predictPercent > 70) {
-
-                holder.trend.setImageResource(R.drawable.up91_100);
-
-            } else if (predictPercent > 60) {
-
-                holder.trend.setImageResource(R.drawable.up81_90);
-
-            } else if (predictPercent > 50) {
-
-                holder.trend.setImageResource(R.drawable.up71_80);
-
-            } else {
-                holder.trend.setImageResource(R.drawable.up51_60);
-                holder.trend.setVisibility(View.INVISIBLE);
-                holder.predictMA5.setVisibility(View.INVISIBLE);
-            }
-
-
-        } else if (predictMA < 0) {
-
-            holder.predictMA5.setText("< " + ma5);
-            holder.predictMA5.setTextColor(Color.RED);
-
-            if (predictPercent > 90) {
-
-                holder.trend.setImageResource(R.drawable.down91_100);
-
-            } else if (predictPercent > 80) {
-
-                holder.trend.setImageResource(R.drawable.down91_100);
-
-            } else if (predictPercent > 70) {
-
-                holder.trend.setImageResource(R.drawable.down91_100);
-
-            } else if (predictPercent > 60) {
-
-                holder.trend.setImageResource(R.drawable.down81_90);
-
-            } else if (predictPercent > 50) {
-
-                holder.trend.setImageResource(R.drawable.down71_80);
-
-            } else {
-                holder.trend.setImageResource(R.drawable.down51_60);
-                holder.trend.setVisibility(View.INVISIBLE);
-                holder.predictMA5.setVisibility(View.INVISIBLE);
-            }
-
-        } else {
-
-            holder.predictMA5.setText("" + ma5);
-            holder.predictMA5.setTextColor(Color.DKGRAY);
-
-            holder.trend.setVisibility(View.INVISIBLE);
-        }
+        holder.peg.setText("" + set.getFloatValue("PEG"));
 
         if (yodContext.mainActivity().favouriteSymbols().contains(set.symbol)) {
             holder.star.setImageResource(android.R.drawable.btn_star_big_on);

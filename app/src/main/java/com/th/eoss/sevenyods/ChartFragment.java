@@ -79,6 +79,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
 
         LinearLayout head = (LinearLayout) rootView.findViewById(R.id.headerLayout);
 
+        /*
         Button button;
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(head.getLayoutParams());
         for (String label:DAY_RANGE_LABELS) {
@@ -89,7 +90,7 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
             button.getLayoutParams().width = columnWidth;
             button.setOnClickListener(this);
             head.addView(button);
-        }
+        }*/
 
         combinedChart.setNoDataText("Please select a Symbol");
 

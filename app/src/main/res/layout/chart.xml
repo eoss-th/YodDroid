@@ -8,7 +8,7 @@
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="100dp"
+    android:paddingTop="120dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.th.eoss.sevenyods.MainActivity"
     tools:showIn="@layout/app_bar_main">
