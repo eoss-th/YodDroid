@@ -22,6 +22,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.th.eoss.util.SETFIN;
+import com.th.eoss.util.SETHistorical;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -349,9 +350,24 @@ public class MainActivity extends FragmentActivity
         recommendedStackedBarFragment.reload();
     }
 
-    public void displayChart(SETFIN set) {
+    public void displayChart(final SETFIN set) {
+
+        final String symbol = set.symbol;
+
+        if (set.historicals==null) {
+            new SETFINHistoricalAsyncTask(symbol) {
+                @Override
+                protected void onPostExecute(List<SETHistorical> historicals) {
+                    set.historicals = historicals;
+                    chartFragment.loadHistoricals(set);
+                }
+            }.execute();
+        }
+
         pager.setCurrentItem(3);
         chartFragment.loadHistoricals(set);
+
+
     }
 
     /*

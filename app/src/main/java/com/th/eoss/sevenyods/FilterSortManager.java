@@ -11,7 +11,9 @@ import com.th.eoss.util.Mean;
 import com.th.eoss.util.SETFIN;
 import com.th.eoss.util.SETFINComparator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -24,7 +26,7 @@ public class FilterSortManager {
 
     private static Map<String, FilterSortManager> instanceMap = new HashMap<>();
 
-    private Map<String, Filter> filterMap;
+    private Map<String, List<Filter>> filterMap;
     private Map<String, Boolean> sortMap;
 
     private FilterSortManager () {
@@ -58,20 +60,40 @@ public class FilterSortManager {
     }
 
     public void put(String valueName, Filter filter) {
-        filterMap.put(valueName, filter);
+
+        List<Filter> filterList = filterMap.get(valueName);
+
+        if (filterList==null) {
+            filterList = new ArrayList<Filter>();
+        }
+
+        filterList.add(filter);
+
+        filterMap.put(valueName, filterList);
+    }
+
+    private void remove(String valueName, Filter filter) {
+
+        List<Filter> filterList = filterMap.get(valueName);
+
+        if (filterList!=null) {
+            filterList.remove(filter);
+        }
     }
 
     public boolean isValid (SETFIN set) {
-        Filter filter;
         Set<String> valueNames = filterMap.keySet();
 
+        List<Filter> filterList;
         for (String valueName:valueNames) {
-            filter = filterMap.get(valueName);
-
-            if (!filter.isValid(set, valueName)) {
-                return false;
+            filterList = filterMap.get(valueName);
+            for (Filter filter:filterList) {
+                if (filter.isValid(set, valueName)==false) {
+                    return false;
+                }
             }
         }
+
         return true;
     }
 
@@ -136,7 +158,7 @@ public class FilterSortManager {
                 builder.setItems(filters, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if ( which==0 ) {
-                            filterMap.put(valueName, filter);
+                            put(valueName, filter);
                         }
                         if (filterToggleButtonManagerListener !=null)
                             filterToggleButtonManagerListener.onChange();
@@ -148,9 +170,9 @@ public class FilterSortManager {
     }
 
     public void update(String valueName, ToggleButton button) {
-        Filter filter = filterMap.get(valueName);
-        if ( filter!=null ) {
-            if (filter instanceof Filter.LowerOrEqualThanFilter) {
+        List<Filter> filterList = filterMap.get(valueName);
+        if ( filterList!=null ) {
+            if (filterList.contains(new Filter.LowerOrEqualThanFilter(""))) {
                 button.setTextOn(button.getTextOff() + " <");
             } else {
                 button.setTextOn(button.getTextOff() + " >");
@@ -161,7 +183,7 @@ public class FilterSortManager {
 
         Boolean sort = sortMap.get(valueName);
 
-        button.setChecked(filter!=null || sort !=null);
+        button.setChecked(filterList!=null || sort !=null);
     }
 
     public interface FilterToggleButtonManagerListener {

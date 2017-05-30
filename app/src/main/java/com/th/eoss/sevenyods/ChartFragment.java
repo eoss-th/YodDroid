@@ -6,8 +6,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +113,6 @@ public class ChartFragment extends Fragment implements View.OnClickListener {
         combinedChart.invalidate();
 
         if (set.historicals==null) {
-            new SETFINHistoricalAsyncTask(set, this).execute();
             return;
         }
 
